@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    .state.Hawaii {
+        fill: #ddc;
+    }
+
+    .state.Alaska {
+        fill: #cdd;
+    }
+
+    .country {
+        fill: #cdc;
+    }
+
+    .state {
+        fill: #fee3a6
+    }
+
+    .country-boundary {
+        fill: none;
+        stroke: #777;
+        stroke-dasharray: 3, 1;
+        stroke-linejoin: round;
+    }
+
+    .state-boundary {
+        fill: none;
+        stroke: #aacfff;
+        stroke-dasharray: 2, 2;
+        stroke-linejoin: round;
+    }
+
+    .country-boundary.USA {
+        stroke: #aaa;
+    }
+
+    .place,
+    .place-label {
+        fill: #444;
+    }
+
+    text {
+        font-size: 10px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        pointer-events: none;
+    }
+
+    .country-label {
+        fill: #777;
+        fill-opacity: .5;
+        font-size: 20px;
+        font-weight: 300;
+        text-anchor: middle;
+    }
+
+    .link {
+        display: block;
+        border-left: dashed 2px #ccc;
+        padding-left: 18px;
+        margin-left: -20px;
+        width: 720px;
+    }
+
+    .link:hover {
+        background: #fff;
+        text-decoration: none;
+    }
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v0.js"></script>
+<script>
+
+    var width = 960, height = 1160;
+    var color = d3.scale.linear().domain(['A'.charCodeAt(0),'Z'.charCodeAt(0)]).range(['#ddc', '#fee3a6']);
+
+    var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+    d3.json("us.json", function (error, us) {
+
+        var country = topojson.object(us, us.objects.country);
+
+        var projection = d3.geo.albersUsa()
+
+        var path = d3.geo.path()
+                .projection(projection)
+                .pointRadius(1);
+
+        svg.selectAll(".country")
+                .data(country.geometries)
+                .enter().append("path")
+                .attr("class", "country")
+                .attr("d", path);
+
+        var states = svg.selectAll(".state")
+                .data(topojson.object(us, us.objects.states).geometries)
+                .enter()
+                .append("path")
+                .attr("d", path)
+                .style("fill", function (d) {
+                    return color(d.properties.name.charCodeAt(0));
+                    });
+
+        states.append("title").text(function(d) {return d.properties.name;});
+
+        svg.append("path")
+                .datum(topojson.mesh(us, us.objects.states))
+                .attr("d", path)
+                .attr("class", "state-boundary")
+
+        var cities = [];
+        us.objects.cities.geometries.forEach(function (d, i) {
+            if (d.properties.scalerank < 4) {
+                cities.push(d);
+            }
+        });
+        us.objects.cities.geometries = cities;
+
+        svg.append("path")
+                .datum(topojson.object(us, us.objects.cities))
+                .attr("d", path)
+                .attr("class", "place");
+
+        svg.selectAll(".place-label")
+                .data(topojson.object(us, us.objects.cities).geometries)
+                .enter().append("text")
+                .attr("class", "place-label")
+                .attr("transform", function (d) {
+                    return "translate(" + projection(d.coordinates) + ")";
+                })
+                .attr("dy", ".35em")
+                .text(function (d) {
+                    return d.properties.name;
+                });
+
+        svg.selectAll(".place-label")
+                .attr("x", function (d) {
+                    return d.coordinates[0] > -1 ? 6 : -6;
+                })
+                .style("text-anchor", function (d) {
+                    return d.coordinates[0] > -1 ? "start" : "end";
+                });
+
+        svg.selectAll(".country-label")
+                .data(country.geometries)
+                .enter().append("text")
+                .attr("class", function (d) {
+                    return "country-label " + d.id;
+                })
+                .attr("transform", function (d) {
+                    return "translate(" + path.centroid(d) + ")";
+                })
+                .attr("dy", ".35em")
+                .text(function (d) {
+                    return d.properties.name;
+                });
+    });
+
+
+</script>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Crime 2008</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/colorbrewer.css">
+    <link rel="stylesheet" href="css/opentip.css">
+    <link rel="stylesheet" href="css/visuals.css">
+
+    <script src="js/modernizr-2.6.2.min.js"></script>
+
+</head>
+<body>
+
+<h2></h2>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span1"><h5>US Crime 2008</h5></div>
+
+        <div class="span11">
+            <div id="view_selection" class="btn-group">
+                <a href="#" id="by_state" class="btn active">By State</a>
+                <a href="#" id="mainline_chart" class="btn">Mainline Categories</a>
+                <a href="#" id="major_class" class="btn">By Major Classes</a>
+                <a href="#" id="mainline_breakdown" class="btn">Major Classes Breakdown</a>
+                <a href="#" id="iv_assets" class='btn'>IV Asset Comparison By Major Class</a>
+            </div>
+            <!-- Visualization goes here -->
+            <div id="vis" style="position: relative;"></div>
+        </div>
+
+    </div>
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v0.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="js/opentip-jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+
+<!-- Visualization Scripts -->
+
+<script src="coffee/CircularScale.js"></script>
+<script src="coffee/displayVis.js"></script>
+<script src="coffee/legend.js"></script>
+<script src="coffee/BubbleChartSingle.js"></script>
+<script src="coffee/ByState.js"></script>
+
+</body>
+</html>
