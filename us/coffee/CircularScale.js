@@ -11,9 +11,9 @@
       this.create = __bind(this.create, this);
       this.elements = __bind(this.elements, this);
       this.compute_parameters = __bind(this.compute_parameters, this);
-      this.exists = __bind(this.exists, this);      this.vis = vis;
+      this.exists = __bind(this.exists, this);      this.vis = vis.slice(0, 1) === "#" ? vis.slice(1) : id;
       this.anchor = anchor;
-      this.id = id;
+      this.id = id.slice(0, 1) === "#" ? id.slice(1) : id;
       this.scale = scale;
       this.values = values.sort(d3.descending);
       this.title = title;

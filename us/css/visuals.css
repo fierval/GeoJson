@@ -10,8 +10,8 @@
     font-size:10px
 }
 
-g#vis_legend text{
-    font-size: 12px;
+text, p{
+    font-size: 13px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     pointer-events: none;
 }

@@ -1,4 +1,4 @@
-class @ByState extends @BubbleChart
+class @AllStates extends @BubbleChart
   constructor: (id, data, color) ->
     super(id, data, color)
 
@@ -26,15 +26,9 @@ class @ByState extends @BubbleChart
                           "< 1100", "< 1300", "< 1500", "1500 or more"],
                          'Violent crimes per 100,000 population',
                          {x: 10, y: 40}
-                         )
+                        )
     @legend.show(true)
-
-    values = [100000, 1000000, 10000000]
-    if !@bubble_scale? or !@bubble_scale.exists()
-      @bubble_scale = new CircularScale("vis", "circularScale", "Circles are sized by population", @radius_scale, values, {x:800, y: -670})
-    else
-      @bubble_scale.refresh(@radius_scale, values)
-
+    @create_scale({x:@width, y: -@height + 30})
 
   show_details: (data) =>
     content =

@@ -5,9 +5,9 @@ class @CircularScale
     # values - array of values to reflet
     # anchor - where to pin it
     constructor: (vis, id, title, scale, values, anchor) ->
-        @vis = vis
+        @vis = if vis.slice(0, 1) == "#" then vis.slice(1) else id
         @anchor = anchor
-        @id = id
+        @id = if id.slice(0, 1) == "#" then id.slice(1) else id
         @scale = scale
         @values = values.sort(d3.descending)
         @title = title
@@ -127,5 +127,5 @@ class @CircularScale
 
         text.transition().duration(@delay)
             .text((d) -> that.fixed_formatter(d))
-            .attr("x", (d) -> that.width + that.padding / 3)
+            .attr("x", (d) -> that.width + that.padding / 2)
             .attr("y", (d) -> 2 * (that.radius - that.scale(d)))

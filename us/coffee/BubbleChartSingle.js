@@ -17,13 +17,19 @@
       this.create_circles = __bind(this.create_circles, this);
       this.get_bubble = __bind(this.get_bubble, this);
       this.create_vis = __bind(this.create_vis, this);
+      this.create_scale = __bind(this.create_scale, this);
       this.scale = __bind(this.scale, this);
+      this.get_circular_scale_values = __bind(this.get_circular_scale_values, this);
       var _this = this;
 
       this.id = "#" + id;
       this.data = data;
       this.width = 940;
       this.height = 700;
+      this.log2_10 = Math.log(10);
+      this.log10 = function(x) {
+        return Math.floor(Math.log(x) / _this.log2_10);
+      };
       this.colorScheme = color == null ? "RdGy" : color;
       this.percent_formatter = d3.format(",.2f");
       this.fixed_formatter = d3.format(",d");
@@ -51,8 +57,34 @@
       this.scale();
     }
 
+    BubbleChart.prototype.get_circular_scale_values = function() {
+      var i, iMin, _results;
+
+      i = this.log10(this.max_amount);
+      iMin = i - 2 > 0 ? i - 2 : 0;
+      _results = [];
+      while (i >= iMin) {
+        _results.push(Math.pow(10, i--));
+      }
+      return _results;
+    };
+
     BubbleChart.prototype.scale = function() {
       return this.radius_scale = d3.scale.pow().exponent(0.5).domain([0, this.max_amount]).range([2, this.max_range]);
+    };
+
+    BubbleChart.prototype.create_scale = function(anchor) {
+      var values;
+
+      values = this.get_circular_scale_values();
+      if ((this.bubble_scale == null) || !this.bubble_scale.exists()) {
+        return this.bubble_scale = new CircularScale(this.id, "circularScale", "Circles are sized by population", this.radius_scale, values, anchor != null ? anchor : {
+          x: this.width,
+          y: -this.height
+        });
+      } else {
+        return this.bubble_scale.refresh(this.radius_scale, values);
+      }
     };
 
     BubbleChart.prototype.create_vis = function() {
@@ -63,7 +95,9 @@
     };
 
     BubbleChart.prototype.get_bubble = function(cell, data) {
-      return cell.selectAll("circle").data(data);
+      return cell.selectAll("circle").data(data, function(d) {
+        return d.id;
+      });
     };
 
     BubbleChart.prototype.create_circles = function(cell, data) {
@@ -90,26 +124,30 @@
       });
     };
 
-    BubbleChart.prototype.force_layout = function(circles, data, size, move) {
-      var _this = this;
+    BubbleChart.prototype.force_layout = function(circles, data, size, move, oneForce) {
+      var force, _ref,
+        _this = this;
 
-      if (this.force != null) {
-        this.force.stop();
+      force = d3.layout.force().nodes(data).size(size);
+      if ((oneForce != null) && oneForce) {
+        if ((_ref = this.force) != null) {
+          _ref.stop();
+        }
+        this.force = force;
       }
-      this.force = d3.layout.force().nodes(data).size(size);
-      return this.force.gravity(this.layout_gravity).charge(this.charge).friction(this.friction).on("tick", function(e) {
+      return force.gravity(this.layout_gravity).charge(this.charge).friction(this.friction).on("tick", function(e) {
         return _this.on_tick(move, e, circles);
       });
     };
 
-    BubbleChart.prototype.plot = function(cell, data) {
+    BubbleChart.prototype.plot = function(cell, data, oneForce) {
       var circles, force;
 
       circles = this.create_circles(cell, data);
       circles.transition().duration(2000).attr("r", function(d) {
         return d.radius;
       });
-      force = this.force_layout(circles, data, [this.xDelta, this.yDelta], this.move_towards_center);
+      force = this.force_layout(circles, data, [this.xDelta, this.yDelta], this.move_towards_center, oneForce);
       return force.start();
     };
 

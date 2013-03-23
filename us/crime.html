@@ -25,11 +25,9 @@
 
         <div class="span11">
             <div id="view_selection" class="btn-group">
-                <a href="#" id="by_state" class="btn active">By State</a>
-                <a href="#" id="mainline_chart" class="btn">Mainline Categories</a>
-                <a href="#" id="major_class" class="btn">By Major Classes</a>
-                <a href="#" id="mainline_breakdown" class="btn">Major Classes Breakdown</a>
-                <a href="#" id="iv_assets" class='btn'>IV Asset Comparison By Major Class</a>
+                <a href="#" id="all_states" class="btn active">All States</a>
+                <a href="#" id="by_state" class="btn">By State</a>
+                <a href="#" id="major_class" class="btn">Map</a>
             </div>
             <!-- Visualization goes here -->
             <div id="vis" style="position: relative;"></div>
@@ -37,7 +35,7 @@
 
     </div>
 </div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.v3.js"></script>
 <script src="http://d3js.org/topojson.v0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="js/opentip-jquery.js"></script>
@@ -49,7 +47,9 @@
 <script src="coffee/displayVis.js"></script>
 <script src="coffee/legend.js"></script>
 <script src="coffee/BubbleChartSingle.js"></script>
-<script src="coffee/ByState.js"></script>
+<script src="coffee/AllStates.js"></script>
+<script src="coffee/BreakdownChart.js"></script>
+<script src="coffee/StatesBreakDown.js"></script>
 
 </body>
 </html>

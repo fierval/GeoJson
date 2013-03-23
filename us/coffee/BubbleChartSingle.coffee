@@ -5,6 +5,11 @@ class @BubbleChart
     @width = 940
     @height = 700
 
+    # logarithm of 10 used to round things
+    # to the closest power of 10
+    @log2_10 = Math.log(10)
+    @log10 = (x) => Math.floor(Math.log(x) / @log2_10)
+
     @colorScheme = if !color? then "RdGy" else color
 
     @percent_formatter = d3.format(",.2f")
@@ -36,8 +41,23 @@ class @BubbleChart
     @max_amount = d3.max(@data, (d) -> d.value)
     @scale()
 
+  get_circular_scale_values: =>
+    i = @log10(@max_amount)
+
+    # we only want three powers of ten max for the scale
+    iMin = if i - 2 > 0 then i - 2 else 0
+    (Math.pow(10, i--) while i >= iMin)
+
   scale: () =>
     @radius_scale = d3.scale.pow().exponent(0.5).domain([0, @max_amount]).range([2, @max_range])
+
+  create_scale: (anchor) =>
+    values = @get_circular_scale_values()
+
+    if !@bubble_scale? or !@bubble_scale.exists()
+      @bubble_scale = new CircularScale(@id, "circularScale", "Circles are sized by population", @radius_scale, values, if anchor? then anchor else {x:@width, y: -@height})
+    else
+      @bubble_scale.refresh(@radius_scale, values)
 
   # create svg at #vis and then
   # create circle representation for each node
@@ -56,7 +76,7 @@ class @BubbleChart
 
   get_bubble: (cell, data) =>
     cell.selectAll("circle")
-    .data(data)
+    .data(data, (d) -> d.id)
 
   create_circles: (cell, data) =>
     that = this
@@ -76,25 +96,28 @@ class @BubbleChart
     @get_bubble(cell, data)
     .attr("stroke", (d) -> d3.rgb($(this).css("fill")).darker())
 
-  force_layout: (circles, data, size, move) =>
-    if @force?
-        @force.stop()
-
-    @force = d3.layout.force()
+  # oneForce set to true means we are re-using the same layout
+  # otherwise set to false
+  force_layout: (circles, data, size, move, oneForce) =>
+    force = d3.layout.force()
       .nodes(data)
       .size(size)
 
-    @force.gravity(@layout_gravity)
-    .charge(@charge)
-    .friction(@friction)
-    .on "tick", (e) => @on_tick(move, e, circles)
+    if oneForce? and oneForce
+      @force?.stop()
+      @force = force
 
-  plot: (cell, data) =>
+    force.gravity(@layout_gravity)
+      .charge(@charge)
+      .friction(@friction)
+      .on "tick", (e) => @on_tick(move, e, circles)
+
+  plot: (cell, data, oneForce) =>
     circles = @create_circles(cell, data)
     # Fancy transition to make bubbles appear, ending with the correct radius
     circles.transition().duration(2000).attr("r", (d) -> d.radius)
 
-    force = @force_layout(circles, data, [@xDelta, @yDelta], @move_towards_center)
+    force = @force_layout(circles, data, [@xDelta, @yDelta], @move_towards_center, oneForce)
     force.start()
 
   # Sets up force layout to display
