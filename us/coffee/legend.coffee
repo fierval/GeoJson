@@ -35,6 +35,8 @@ class @Legend
     @legend.append("circle")
       .attr("class", (d, i) -> color_class(i))
       .attr("r", 4)
+      .attr("stroke-width", 1)
+      .attr("stroke", (d,i) -> d3.rgb($(this).css("fill")).darker())
 
     @legend.append("text")
       .attr("x", 14)
@@ -52,4 +54,4 @@ class @Legend
     if isVertical
       "translate(#{start.x}, #{start.y + 10 + i * 22})"
     else
-      "translate(#{start.x + i * 70}, #{start.y})"
+      "translate(#{start.x + i * 65}, #{start.y})"
