@@ -5,9 +5,10 @@ class @CircularScale
     # values - array of values to reflet
     # anchor - where to pin it
     constructor: (vis, id, title, scale, values, anchor) ->
-        @vis = if vis.slice(0, 1) == "#" then vis.slice(1) else id
+        @vis = vis.removeLeadHash()
         @anchor = anchor
-        @id = if id.slice(0, 1) == "#" then id.slice(1) else id
+        @id = id.removeLeadHash()
+
         @scale = scale
         @values = values.sort(d3.descending)
         @title = title

@@ -29,18 +29,25 @@ class @BreakdownChart extends BubbleChart
     @vis.attr("height", @height)
     @vis.select("svg").attr("height", @height)
 
-    #will display titles
-    @titles =
+    #will display groups
+    @groups =
       @vis.selectAll("g.cell")
         .data(@data, (d) -> d.id)
         .enter()
         .append("g")
+        .attr("id", (d) -> d.id)
         .attr("class", "cell")
-        .attr("transform", (d, i) => "translate(#{@xStart + @xDelta * (i % @groupsPerLine)}, #{@yStart + @yDelta * Math.floor(i / @groupsPerLine)})")
+        .attr("transform", (d, i) => "translate(#{@getX(i)}, #{@getY(i)})")
         .each((d) -> that.plot(d3.select(this), that.get_group_data(d), false)) # false means we are using different force layout for each plot
 
-    @titles.append("text")
+    @groups.append("text")
       .attr("x", @center.x)
       .attr("y", @yDelta)
       .attr("text-anchor", "middle")
       .text((d) -> that.get_group_title(d))
+
+  getX: (i) =>
+    @xStart + @xDelta * (i % @groupsPerLine)
+
+  getY: (i) =>
+    @yStart + @yDelta * Math.floor(i / @groupsPerLine)

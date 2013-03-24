@@ -1,6 +1,7 @@
 class @BubbleChart
   constructor: (id, data, color) ->
-    @id = "##{id}"
+    # make sure we don't end up with "##id"
+    @id = "##{id.removeLeadHash()}"
     @data = data
     @width = 940
     @height = 700
@@ -130,7 +131,7 @@ class @BubbleChart
   move_towards_center: (alpha) =>
     (d) =>
       d.x = d.x + (@center.x - d.x) * @damper * alpha
-      d.y = d.y + (@center.y - d.y) * @damper * alpha
+      d.y = d.y + (@center.y - d.y + 20) * @damper * alpha
 
   on_tick: (move, e, circles) =>
     circles.each(move(e.alpha))

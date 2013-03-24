@@ -1,5 +1,5 @@
 class @AllStates extends @BubbleChart
-  constructor: (id, data, color) ->
+  constructor: (id, data, color, domain) ->
     super(id, data, color)
 
     @max_range = 90
@@ -12,9 +12,15 @@ class @AllStates extends @BubbleChart
                     d.x = Math.random() * @width
                     d.y = Math.random() * @height
               )
-    @domain = d3.range(100, 1700, 200)
+    @domain = if domain? then domain else d3.range(100, 1700, 200)
     @color_class =
       d3.scale.threshold().domain(@domain).range(("q#{i}-9" for i in [8..0]))
+
+    @legend_text =
+      () =>
+        text = ("< #{e}" for e in @domain)
+        text.push("#{@domain[@domain.length - 1]} or more")
+        text
 
   create_vis: () =>
     super()
@@ -22,11 +28,10 @@ class @AllStates extends @BubbleChart
     # we promise to fall into in the legend text
     @legend = new Legend(@vis,
                          ((i) => @color_class(@domain[i] - 1)),
-                         ["< 100", " < 300", "< 500", "< 700", "< 900",
-                          "< 1100", "< 1300", "< 1500", "1500 or more"],
+                         @legend_text(),
                          'Violent crimes per 100,000 population',
                          {x: 10, y: 40}
-                        )
+                         )
     @legend.show(true)
     @create_scale({x:@width, y: -@height + 30})
 

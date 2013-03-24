@@ -2,7 +2,6 @@ $ ->
   view_id = $("#view_selection a.btn.active").attr("id");
   byState = null
   allStates = null
-  @data = null
 
   $("#view_selection a").click () ->
 
@@ -11,31 +10,30 @@ $ ->
     $(this).toggleClass("active")
     load_visual(view_id)
 
-  render_all_states = () ->
-    allStates = new @AllStates('vis', d3.map(@data).values(), 'PiYG')
+  toArray = (data) -> d3.map(data).values()
+  String::startsWith = (str) -> this.slice(0, str.length) == str
+  String::removeLeadHash = () -> if this.startsWith("#") then this.slice(1) else this.toString()
+
+  render_all_states = (data) ->
+    allStates = new @AllStates('vis', toArray(data), 'PiYG')
     allStates.create_vis()
     allStates.display()
 
-  render_by_state = () ->
-    byState = new @StatesBreakDown('vis', d3.map(@data).values(), 'PiYG')
+  render_by_state = (data) ->
+    byState = new @StatesBreakDown('vis', toArray(data), 'PiYG')
     byState.create_vis()
     byState.display()
 
   load_visual = (type) ->
     switch type
       when  'all_states'
-        if !@data?
-          d3.json "crime.json",
-                  (data) ->
-                    @data = data
-                    render_all_states()
-        else
-          render_all_states()
+        d3.json "crime.json",
+                (data) ->
+                  render_all_states(data)
 
       when 'by_state'
         d3.json "crime.json",
                 (data) ->
-                  @data = data
-                  render_by_state()
+                  render_by_state(data)
   # action!
   load_visual(view_id)
