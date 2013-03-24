@@ -1,17 +1,11 @@
 class @AllStates extends @BubbleChart
   constructor: (id, data, color, domain) ->
     super(id, data, color)
-
+    @height = 900
     @max_range = 90
     @scale()
 
-    @data
-      .forEach(
-                (d) =>
-                    d.radius = @radius_scale(d.value)
-                    d.x = Math.random() * @width
-                    d.y = Math.random() * @height
-              )
+    @update_data()
     @domain = if domain? then domain else d3.range(100, 1700, 200)
     @color_class =
       d3.scale.threshold().domain(@domain).range(("q#{i}-9" for i in [8..0]))
@@ -21,6 +15,15 @@ class @AllStates extends @BubbleChart
         text = ("< #{e}" for e in @domain)
         text.push("#{@domain[@domain.length - 1]} or more")
         text
+
+  update_data: () =>
+    @data
+    .forEach(
+              (d) =>
+                d.radius = @radius_scale(d.value)
+                d.x = Math.random() * @width
+                d.y = Math.random() * @height
+            )
 
   create_vis: () =>
     super()
@@ -44,3 +47,8 @@ class @AllStates extends @BubbleChart
 
   hide_details: (data) =>
     @tip?.hide()
+
+  move_towards_center: (alpha) =>
+    (d) =>
+      d.x = d.x + (@center.x - d.x) * @damper * alpha
+      d.y = d.y + (@center.y - d.y + 50) * @damper * alpha

@@ -18,7 +18,8 @@ class @StatesBreakDown extends BreakdownChart
     # since we are using a threshold scale, we need to make sure we fall into the bucket
     # we promise to fall into in the legend text
     @legend = new Legend(@vis,
-                         ((i) => @color_class(@domain[i] - 1)),
+                         ((i) =>
+                           @color_class(@domain[i] - 1)),
                          ["< 100", " < 300", "< 500", "< 700", "< 900",
                           "< 1100", "< 1300", "< 1500", "1500 or more"],
                          'Violent crimes per 100,000 population',
@@ -36,32 +37,35 @@ class @StatesBreakDown extends BreakdownChart
   display: () ->
     super()
 
-    @groups.on "click", (d, i) => @show_cities(d, i, this)
+    @groups.on "click", (d, i) =>
+      @trigger_show_cities(d, i, this)
 
   show_details: (data) =>
     content =
       "Population: #{@fixed_formatter(data.value)}<br/>Violent: #{@fixed_formatter(data.violent)}<br />Property: #{@fixed_formatter(data.property)} <br />"
     content += "Violent Crime per 100,000: #{@percent_formatter(data.group)}"
 
-    @tip = new Opentip("##{data.id}", content, "", {style: "glass", target: true, showOn: "creation", stem: "middle", tiptJoint: "middle"})
+    @tip = new Opentip("##{data.id}", content, "",
+                       {style: "glass", target: true, showOn: "creation", stem: "middle", tiptJoint: "middle"})
 
   hide_details: (data) =>
     @tip?.hide()
 
-  show_cities: (state) =>
+  trigger_show_cities: (d, i) =>
     @force?.stop()
     @tip?.hide()
 
     @data
       .forEach(
-                   (d, i) =>
-                     d.x = d.px = @getX(i)
-                     d.y = d.py = @getY(i)
+                (d, i) =>
+                  d.x = d.px = @getX(i)
+                  d.y = d.py = @getY(i)
               )
-    @force = d3.layout.force().nodes(@data).size([@width, @height]).on("tick", (e) => @scatter(e, state))
+    @force = d3.layout.force().nodes(@data).size([@width, @height]).on("tick", (e) =>
+      @scatter(e, @data[i], i))
     @force.start()
 
-  scatter: (e, state) =>
+  scatter: (e, state, i) =>
     # move an individual group out of sight
     move_group = (alpha) =>
       (d, i) =>
@@ -70,15 +74,43 @@ class @StatesBreakDown extends BreakdownChart
 
     @groups
       .each(move_group(e.alpha))
-      .attr("transform", (d) -> "translate(#{d.x},#{d.y})")
+      .attr("transform", (d) ->
+             "translate(#{d.x},#{d.y})")
 
     if @data[0].x > @width
       @force.stop()
-      @display_city(state)
+      # remember the state in window location
+      # and trigger window "hashchange" event to
+      # actually show the cities
+      $.bbq.pushState({'by_state': i})
 
-
-  display_city: (state) =>
-    data = state.cities
+  # this will actually show the cities
+  show_cities: (i) =>
+    data = @data[i].cities
     byCity = new AllStates(@id, data, @colorScheme, d3.range(100, 900, 100))
+    if @data[i].id == "NEW_JERSEY" or @data[i].id == "CONNECTICUT"
+      byCity.height = 900
+      byCity.center = {x: byCity.width / 2, y: byCity.height / 2}
+      byCity.max_range = 60
+      byCity.scale()
+      byCity.update_data()
+
     byCity.create_vis()
     byCity.display()
+    byCity.bubble_scale.svg.attr("height", byCity.bubble_scale.height + 80)
+    byCity.bubble_scale.svg
+      .append("text")
+      .attr("x", byCity.bubble_scale.width)
+      .attr("y", byCity.bubble_scale.height + 20)
+      .attr("text-anchor", "middle")
+      .style("font-size", "18")
+      .text(@data[i].name)
+
+    byCity.bubble_scale.svg.attr("width", byCity.bubble_scale.width + 220)
+    byCity.bubble_scale.svg
+    .append("text")
+    .attr("x", 0)
+    .attr("y", byCity.bubble_scale.height + 60)
+    .text("Click browser 'back' button to return to the states view")
+
+

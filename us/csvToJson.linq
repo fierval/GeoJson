@@ -17,6 +17,7 @@ lines.RemoveAt(0);
 string state = string.Empty;
 Dictionary<string, dynamic> recs = new Dictionary<string, dynamic>();
 dynamic record = null;
+int cityId = 0;
 
 foreach (var line in lines)
 {
@@ -29,9 +30,12 @@ foreach (var line in lines)
         switch (i)
         {
             case 0:
+                // new state has appeared
+                // reset everything
                 if (!string.IsNullOrWhiteSpace(line[0]) && line[0] != state)
                 {
                     state = line[0];
+                    cityId = 0;
                     
                     record = new ExpandoObject();
                     var rec_dict = record as IDictionary<String, Object>;
@@ -41,7 +45,7 @@ foreach (var line in lines)
                     record.violent = 0;
                     record.property = 0;
                     record.cities = new List<dynamic>();
-                    
+                           
                     recs.Add(state, record);
                 }
                 break;
@@ -50,18 +54,23 @@ foreach (var line in lines)
                 break;
             default:
                 int result;
-                if(int.TryParse(line[i], out result))
-                {
-                    dict[key] = result;
-                }
-                else
-                {
-                    dict[key] = 0;
-                }
+                dict[key] = int.TryParse(line[i], out result) ? result : 0;
                 break;
         }
     }
-
+    
+    // there are cities with no reports.
+    // skip them.
+    if ((int)city.population == 0)
+    {
+        continue;
+    }
+    city.id = cityId++;
+    city.value = city.population;
+    // remove the last digit off of the end of the city name
+    city.city = city.city.ToString().TrimEnd('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    city.name = city.city;
+    city.group = 100000f * ((float) city.violent / (float) city.value);
     record.value = (int)record.value + (int)city.population;
     record.violent = (int)record.violent + (int)city.violent;
     record.property = (int)record.property + (int)city.property;
