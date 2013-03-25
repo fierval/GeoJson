@@ -38,6 +38,8 @@ class @BreakdownChart extends BubbleChart
         .attr("id", (d) -> d.id)
         .attr("class", "cell")
         .attr("transform", (d, i) => "translate(#{@getX(i)}, #{@getY(i)})")
+
+    @groups
         .each((d) -> that.plot(d3.select(this), that.get_group_data(d), false)) # false means we are using different force layout for each plot
 
     @groups.append("text")

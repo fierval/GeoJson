@@ -23,7 +23,7 @@ class @StatesBreakDown extends BreakdownChart
                          ["< 100", " < 300", "< 500", "< 700", "< 900",
                           "< 1100", "< 1300", "< 1500", "1500 or more"],
                          'Violent crimes per 100,000 population',
-                         {x: 10, y: 40}
+                         {x: @getX(0) + @xDelta / 4, y: 40}
                         )
     @legend.show(true)
     @create_scale()
@@ -52,37 +52,25 @@ class @StatesBreakDown extends BreakdownChart
     @tip?.hide()
 
   trigger_show_cities: (d, i) =>
-    @force?.stop()
     @tip?.hide()
 
     @data
-      .forEach(
-                (d, i) =>
+      .forEach ((d, i) =>
                   d.x = d.px = @getX(i)
-                  d.y = d.py = @getY(i)
-              )
-    @force = d3.layout.force().nodes(@data).size([@width, @height]).on("tick", (e) =>
-      @scatter(e, @data[i], i))
-    @force.start()
+                  d.y = d.py = @getY(i))
 
-  scatter: (e, state, i) =>
-    # move an individual group out of sight
-    move_group = (alpha) =>
-      (d, i) =>
-        d.x = if alpha < 0.01 then @width + 50 else d.px + 20 * (1 - alpha)
-        d.y = @getY(i)
+    # move them all beyond the screen
+    that = this
+    @groups.transition().duration(1200).attr("transform", (d, i) -> "translate(#{that.width + that.getX(i)}, #{that.getY(i)})")
 
-    @groups
-      .each(move_group(e.alpha))
-      .attr("transform", (d) ->
-             "translate(#{d.x},#{d.y})")
-
-    if @data[0].x > @width
-      @force.stop()
-      # remember the state in window location
-      # and trigger window "hashchange" event to
-      # actually show the cities
-      $.bbq.pushState({'by_state': i})
+    # remember the state in window location
+    # and trigger window "hashchange" event to
+    # actually show the cities
+    d3.timer(
+              (() ->
+                $.bbq.pushState({'by_state': i})
+                true),
+        1400)
 
   # this will actually show the cities
   show_cities: (i) =>
@@ -100,17 +88,11 @@ class @StatesBreakDown extends BreakdownChart
     byCity.bubble_scale.svg.attr("height", byCity.bubble_scale.height + 80)
     byCity.bubble_scale.svg
       .append("text")
-      .attr("x", byCity.bubble_scale.width)
+      .attr("x", byCity.bubble_scale.width/2 + 5)
       .attr("y", byCity.bubble_scale.height + 20)
       .attr("text-anchor", "middle")
       .style("font-size", "18")
       .text(@data[i].name)
 
-    byCity.bubble_scale.svg.attr("width", byCity.bubble_scale.width + 220)
-    byCity.bubble_scale.svg
-    .append("text")
-    .attr("x", 0)
-    .attr("y", byCity.bubble_scale.height + 60)
-    .text("Click browser 'back' button to return to the states view")
-
-
+    link = '<a href="#by_state">Click here or browser "<-" button to return to the states view</a>'
+    $("##{byCity.bubble_scale.id}").append(link)

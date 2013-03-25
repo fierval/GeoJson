@@ -2,7 +2,6 @@ $ ->
   view_id = $("#view_selection a.btn.active").attr("id");
   byState = null
   allStates = null
-  $.bbq.pushState({'view_selection': 'all_states'})
 
   $("#view_selection a").click () ->
     view_id = $(this).attr("id")
@@ -43,13 +42,19 @@ $ ->
                 (data) ->
                   render_by_state(data, state)
 
- # load_visual(view_id)
-
   $(window).bind 'hashchange', (e) ->
-    view = ({id, value} for id, value of $.bbq.getState())[0]
-    view.id = view.value if view.id == 'view_selection'
-    load_visual(view.id, if view.value == "" then undefined else view.value)
-    $('#view_selection a').removeClass('active')
-    $("#view_selection a##{view.id}").addClass('active')
+    states = $.bbq.getState()
 
-  $(window).trigger("hashchange")
+    view = ({id, value} for id, value of states)[0]
+
+    # initial value: we just accessed the url
+    if !view?
+      load_visual(view_id)
+    else
+      view.id = view.value if view.id == 'view_selection'
+      load_visual(view.id, if view.value == "" then undefined else view.value)
+      $('#view_selection a').removeClass('active')
+      $("#view_selection a##{view.id}").addClass('active')
+
+  # action!
+  $(window).trigger('hashchange')

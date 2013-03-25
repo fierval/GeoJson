@@ -10,8 +10,17 @@
     font-size:10px
 }
 
-text, p{
+text {
     font-size: 13px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     pointer-events: none;
+}
+
+a
+{
+    font-size: 13px;
+}
+
+g circle {
+    cursor: pointer;
 }
