@@ -37,7 +37,7 @@ class @StatesBreakDown extends BreakdownChart
     if !@help_tip?
       circle = $(".cell##{@data[Math.ceil(Math.random() * 11 + 11)].id}")
       @help_tip = new Opentip(circle,
-                    "<p style='font-size:17px'>Each of these circles is clickable!</p>",
+                    "<p style='font-size:17px'>Click me!</p>",
                     { borderWidth: 3, stemLength: 18, stemBase: 20, style: "glass", target: true, borderColor: "#317CC5" })
       @help_tip.show()
       d3.timer () =>
