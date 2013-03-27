@@ -7,6 +7,9 @@ class @BreakdownChart extends BubbleChart
     @max_range = 40
     @scale()
 
+    # speed things up a little
+    @damper = 0.1
+
     @xStart = 50
     @yStart = 50
     @yDelta = 150
@@ -20,6 +23,7 @@ class @BreakdownChart extends BubbleChart
 
   display: () =>
     that = this
+    @update_data()
 
     # figure out container height
     lines = Math.ceil(@data.length / @groupsPerLine)
@@ -53,3 +57,14 @@ class @BreakdownChart extends BubbleChart
 
   getY: (i) =>
     @yStart + @yDelta * Math.floor(i / @groupsPerLine)
+
+  update_data: () =>
+    @data
+      .forEach(
+                (d) =>
+                  d.radius = @radius_scale(d.value)
+                  d.x = Math.random() * @xDelta / 2
+                  d.y = Math.random() * @yDelta / 2
+                  delete d.px
+                  delete d.py
+              )

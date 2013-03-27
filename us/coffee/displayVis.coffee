@@ -2,50 +2,74 @@ $ ->
   view_id = $("#view_selection a.btn.active").attr("id");
   byState = null
   allStates = null
+  crime_data = null
+  map_data = null
+  map = null
+  charts = []
 
-  $("#view_selection a").click () ->
-    view_id = $(this).attr("id")
-    $('#view_selection a').removeClass('active')
-    $(this).toggleClass("active")
+  $("#view_selection a").click(() ->
+    view_type = $(this).attr("id")
+    view_id = view_type
+    $("#view_selection a").removeClass("active")
+    $(this).toggleClass("active"))
 
   toArray = (data) -> d3.map(data).values()
   String::startsWith = (str) -> this.slice(0, str.length) == str
   String::removeLeadHash = () -> if this.startsWith("#") then this.slice(1) else this.toString()
 
-  render_all_states = (data) ->
-    allStates = new @AllStates('vis', toArray(data), 'PiYG')
+  render_all_states = () ->
+    if !allStates?
+      allStates = new @AllStates('vis', crime_data, 'PiYG')
+      charts.push(allStates)
+
     allStates.create_vis()
     allStates.display()
 
-  render_by_state = (data, state) ->
+  render_by_state = (state) ->
 
-    if !state?
-      byState = new @StatesBreakDown('vis', toArray(data), 'PiYG')
-      byState.create_vis()
-      byState.display()
-    else
-      if !byState?
-        byState = new @StatesBreakDown('vis', toArray(data), 'PiYG')
-        byState.create_vis()
-        byState.display()
+    if !byState?
+      byState = new @StatesBreakDown('vis', crime_data, 'PiYG')
+      charts.push(byState)
+
+    byState.create_vis()
+    byState.display()
+
+    if state?
       byState.show_cities(state)
 
-  load_visual = (type, state) ->
+  render_map = (state) ->
+    map = new @UsMap('vis', map_data)
+    map.create_vis()
+
+  render = (type, state) ->
     switch type
       when  'all_states'
-        d3.json "crime.json",
-                (data) ->
-                  render_all_states(data)
-
+          render_all_states()
       when 'by_state'
-        d3.json "crime.json",
-                (data) ->
-                  render_by_state(data, state)
+          render_by_state(state)
+      when 'map'
+        if !map_data?
+          d3.json "us.json", (map) ->
+                  map_data = map
+                  render_map(state)
+        else
+          render_map(state)
+
+  load_visual = (type, state) ->
+    if !crime_data?
+      d3.json "crime.json",
+             (data) ->
+              crime_data = toArray(data)
+              render(type, state)
+    else
+      render(type, state)
 
   $(window).bind 'hashchange', (e) ->
     states = $.bbq.getState()
-
     view = ({id, value} for id, value of states)[0]
+
+    for chart in charts
+      do (chart) -> chart?.cleanup()
 
     # initial value: we just accessed the url
     if !view?

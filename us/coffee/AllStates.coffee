@@ -23,17 +23,21 @@ class @AllStates extends @BubbleChart
                 d.radius = @radius_scale(d.value)
                 d.x = Math.random() * @width
                 d.y = Math.random() * @height
+                delete d.px
+                delete d.py
             )
 
   create_vis: () =>
     super()
+    @update_data()
+
     # since we are using a threshold scale, we need to make sure we fall into the bucket
     # we promise to fall into in the legend text
     @legend = new Legend(@vis,
                          ((i) => @color_class(@domain[i] - 1)),
                          @legend_text(),
                          'Violent crimes per 100,000 population',
-                         {x: 10, y: 40}
+                         {x: 75, y: 40}
                          )
     @legend.show(true)
     @create_scale({x:@width, y: -@height + 30})
@@ -52,3 +56,7 @@ class @AllStates extends @BubbleChart
     (d) =>
       d.x = d.x + (@center.x - d.x) * @damper * alpha
       d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
+
+  cleanup: () =>
+    super()
+    @tip?.hide()

@@ -6,6 +6,10 @@ class @BubbleChart
     @width = 940
     @height = 700
 
+    # we may use many force layouts
+    # and they need to be cleaned up when the time comes
+    @forces = []
+
     # logarithm of 10 used to round things
     # to the closest power of 10
     @log2_10 = Math.log(10)
@@ -107,6 +111,8 @@ class @BubbleChart
     if oneForce? and oneForce
       @force?.stop()
       @force = force
+    else
+      @forces.push(force)
 
     force.gravity(@layout_gravity)
       .charge(@charge)
@@ -148,4 +154,13 @@ class @BubbleChart
     undefined
 
   hide_details: (data, i, element) =>
+    undefined
+
+  # need to call this every time we move away
+  # from this visual. If we use the same data for several
+  # visuals and we move away to fast and force layouts are still happening,
+  # weird things may (and will) occur
+  cleanup: () =>
+    @force?.stop()
+    force?.stop() for force in @forces
     undefined

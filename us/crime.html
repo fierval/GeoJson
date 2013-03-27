@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/colorbrewer.css">
     <link rel="stylesheet" href="css/opentip.css">
     <link rel="stylesheet" href="css/visuals.css">
+    <link rel="stylesheet" href="css/map.css">
 
     <script src="js/modernizr-2.6.2.min.js"></script>
 
@@ -27,7 +28,7 @@
             <div id="view_selection" class="btn-group">
                 <a href="#all_states" id="all_states" class="btn active">All States</a>
                 <a href="#by_state" id="by_state" class="btn">By State</a>
-                <a href="#map" id="major_class" class="btn">Map</a>
+                <a href="#map" id="map" class="btn">Map</a>
             </div>
             <!-- Visualization goes here -->
             <div id="vis" style="position: relative;"></div>
@@ -43,13 +44,15 @@
 
 <!-- Visualization Scripts -->
 
-<script src="coffee/displayVis.js"></script>
 <script src="coffee/CircularScale.js"></script>
 <script src="coffee/legend.js"></script>
 <script src="coffee/BubbleChartSingle.js"></script>
 <script src="coffee/AllStates.js"></script>
 <script src="coffee/BreakdownChart.js"></script>
+<script src="coffee/UsMap.js"></script>
 <script src="coffee/StatesBreakDown.js"></script>
+<script src="coffee/displayVis.js"></script>
+
 
 </body>
 </html>
