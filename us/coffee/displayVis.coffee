@@ -39,7 +39,9 @@ $ ->
       byState.show_cities(state)
 
   render_map = (state) ->
-    map = new @CrimeUsMap('vis', map_data, crime_data, colorScheme)
+    if !map?
+      map = new @CrimeUsMap('vis', map_data, crime_data, colorScheme)
+
     map.create_vis()
     map.display()
 

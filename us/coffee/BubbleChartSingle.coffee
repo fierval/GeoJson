@@ -46,6 +46,20 @@ class @BubbleChart
     @max_amount = d3.max(@data, (d) -> d.value)
     @scale()
 
+    # this interpolation will smoothely transition our colors
+    # colros are defined by styles in the form qX-6 (X from 0 to 5)
+    # so we can transition them with the animation.
+    d3.interpolators.push(
+                           (a, b) ->
+                             re =  /^q([0-9])+/
+                             ma = re.exec(a)
+                             mb = re.exec(b)
+                             if ma? && mb?
+                               a = parseInt(ma[1])
+                               b = parseInt(mb[1]) - a
+                               (t) -> "q#{Math.round(a + b * t)}-9"
+                         )
+
   get_circular_scale_values: =>
     i = @log10(@max_amount)
 

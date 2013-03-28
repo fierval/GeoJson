@@ -6,6 +6,7 @@ class @CrimeUsMap extends UsMap
   constructor: (id, geometry, data, color) ->
     super(id, geometry)
 
+    @delay = 4000
     @data = data
     @allStates = new AllStates(id, d3.values(data), color)
 
@@ -28,7 +29,7 @@ class @CrimeUsMap extends UsMap
       catch error
         console.log(state)
 
-    @states.style("fill", null).attr("class", (d) -> color_class(d.properties.name))
+    @states.style("fill", null).attr("class", (d) -> "q0-9").transition().duration(@delay).attr("class", (d) -> color_class(d.properties.name))
 
   show_details: (data) =>
     @allStates.show_details(@data[data.properties.name.toUpperCase()])
