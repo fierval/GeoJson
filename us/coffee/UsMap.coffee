@@ -15,19 +15,26 @@ class @UsMap
       .projection(@projection)
       .pointRadius(1)
 
+  normalize_state: (state) =>
+    state.toUpperCase().split(' ').join('_')
+
   create_vis: () =>
     $(@id).children().remove()
     $(@id).css("width", "#{@width}px")
     $(@id).css("height", "#{@height}px")
 
-    @svg =
+    @enclosingContainer =
       d3.select(@id).append("svg")
         .style("position", "relative")
-         .style("top", "100px")
+
+    @svg = @enclosingContainer.append("svg")
+        .style("position", "relative")
+        .style("top", "100px")
+        .attr("y", 100)
         .attr("width", @width)
         .attr("height", @height)
-        .attr("y", 100)
 
+  display: () =>
     # draw country
     @svg.selectAll(".country")
       .data(@country.geometries)
@@ -35,16 +42,19 @@ class @UsMap
       .attr("class", "country")
       .attr("d", @path);
 
+    that = this
     @states =
       @svg.selectAll(".state")
-        .data(topojson.object(@us, @us.objects.states).geometries)
+        .data(topojson.object(@us, @us.objects.states).geometries, (d) -> d.properties.name)
         .enter()
         .append("path")
         .attr("d", @path)
+        .attr("class", ".state")
+        .attr("id", (d) => @normalize_state(d.properties.name))
         .style("fill", (d) =>
                 @color(d.properties.name.charCodeAt(0)))
-
-    @states.append("title").text((d) -> return d.properties.name)
+        .on("mouseover", (d,i) -> that.show_details(d,i,this))
+        .on("mouseout", (d,i) -> that.hide_details(d,i,this))
 
     @svg.append("path")
       .datum(topojson.mesh(@us, @us.objects.states))

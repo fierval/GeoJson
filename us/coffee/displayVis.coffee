@@ -6,6 +6,7 @@ $ ->
   map_data = null
   map = null
   charts = []
+  colorScheme = 'PiYG'
 
   $("#view_selection a").click(() ->
     view_type = $(this).attr("id")
@@ -19,7 +20,7 @@ $ ->
 
   render_all_states = () ->
     if !allStates?
-      allStates = new @AllStates('vis', crime_data, 'PiYG')
+      allStates = new @AllStates('vis', toArray(crime_data), colorScheme)
       charts.push(allStates)
 
     allStates.create_vis()
@@ -28,7 +29,7 @@ $ ->
   render_by_state = (state) ->
 
     if !byState?
-      byState = new @StatesBreakDown('vis', crime_data, 'PiYG')
+      byState = new @StatesBreakDown('vis', toArray(crime_data), colorScheme)
       charts.push(byState)
 
     byState.create_vis()
@@ -38,8 +39,9 @@ $ ->
       byState.show_cities(state)
 
   render_map = (state) ->
-    map = new @UsMap('vis', map_data)
+    map = new @CrimeUsMap('vis', map_data, crime_data, colorScheme)
     map.create_vis()
+    map.display()
 
   render = (type, state) ->
     switch type
@@ -59,7 +61,7 @@ $ ->
     if !crime_data?
       d3.json "crime.json",
              (data) ->
-              crime_data = toArray(data)
+              crime_data = data
               render(type, state)
     else
       render(type, state)
