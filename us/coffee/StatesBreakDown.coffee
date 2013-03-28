@@ -34,7 +34,7 @@ class @StatesBreakDown extends BreakdownChart
     @groups.on "click", (d, i) =>
       @trigger_show_cities(d, i, this)
 
-    if !@help_tip?
+    if !@help_tip? and $.bbq.getState('by_state') == ''
       circle = $(".cell##{@data[Math.ceil(Math.random() * 11 + 11)].id}")
       @help_tip = new Opentip(circle,
                     "<p style='font-size:17px'>Click me!</p>",
