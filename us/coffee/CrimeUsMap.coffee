@@ -27,13 +27,10 @@ class @CrimeUsMap extends UsMap
     @enclosingContainer.attr("class", @allStates.colorScheme)
 
     color_class = (state) =>
-      name = state.toUpperCase()
-      try
-        @allStates.color_class(@data[name].group)
-      catch error
-        console.log(state)
+      @allStates.color_class(@data[state.toUpperCase()].group)
 
-    @states.style("fill", null).attr("class", (d) -> "q0-9").transition().duration(@delay).attr("class", (d) -> color_class(d.properties.name))
+    @states.style("fill", null).attr("class", (d) -> color_class(d.properties.name))
+    @create_cities()
 
   show_details: (data) =>
     @allStates.show_details(@data[data.properties.name.toUpperCase()])

@@ -61,6 +61,9 @@ class @UsMap
       .attr("d", @path)
       .attr("class", "state-boundary")
 
+    @create_cities()
+
+  create_cities: () =>
     # create a filtered cities collection
     cities =
       @us.objects.cities.geometries.filter((d) -> d.properties.scalerank < 4)
