@@ -5,6 +5,12 @@
     "value": 2517349,
     "violent": 15376,
     "property": 138355,
+    "murder": 284,
+    "rape": 1039,
+    "assault": 7890,
+    "burglary": 34299,
+    "larceny": 94377,
+    "vehicle_theft": 9679,
     "cities": [
       {
         "city": "Abbeville",
@@ -4299,6 +4305,12 @@
     "value": 447612,
     "violent": 3626,
     "property": 15077,
+    "murder": 18,
+    "rape": 381,
+    "assault": 2618,
+    "burglary": 1979,
+    "larceny": 11965,
+    "vehicle_theft": 1199,
     "cities": [
       {
         "city": "Anchorage",
@@ -4795,6 +4807,12 @@
     "value": 5020612,
     "violent": 25049,
     "property": 194394,
+    "murder": 328,
+    "rape": 1409,
+    "assault": 14125,
+    "burglary": 46960,
+    "larceny": 125572,
+    "vehicle_theft": 32827,
     "cities": [
       {
         "city": "Apache Junction",
@@ -5957,6 +5975,12 @@
     "value": 1602766,
     "violent": 11175,
     "property": 83713,
+    "murder": 113,
+    "rape": 988,
+    "assault": 7583,
+    "burglary": 24028,
+    "larceny": 55046,
+    "vehicle_theft": 4639,
     "cities": [
       {
         "city": "Arkadelphia",
@@ -8523,6 +8547,12 @@
     "value": 30218976,
     "violent": 154408,
     "property": 909569,
+    "murder": 1716,
+    "rape": 7276,
+    "assault": 83298,
+    "burglary": 193077,
+    "larceny": 553753,
+    "vehicle_theft": 163209,
     "cities": [
       {
         "city": "Adelanto",
@@ -16795,6 +16825,12 @@
     "value": 3231583,
     "violent": 12795,
     "property": 108107,
+    "murder": 121,
+    "rape": 1597,
+    "assault": 8121,
+    "burglary": 20853,
+    "larceny": 76466,
+    "vehicle_theft": 10788,
     "cities": [
       {
         "city": "Alamosa",
@@ -19163,6 +19199,12 @@
     "value": 2855695,
     "violent": 8012,
     "property": 72395,
+    "murder": 92,
+    "rape": 533,
+    "assault": 4320,
+    "burglary": 11689,
+    "larceny": 53643,
+    "vehicle_theft": 7063,
     "cities": [
       {
         "city": "Ansonia",
@@ -20811,6 +20853,12 @@
     "value": 228204,
     "violent": 2583,
     "property": 11231,
+    "murder": 31,
+    "rape": 105,
+    "assault": 1521,
+    "burglary": 2100,
+    "larceny": 8117,
+    "vehicle_theft": 1014,
     "cities": [
       {
         "city": "Bethany Beach",
@@ -21451,6 +21499,12 @@
     "value": 591833,
     "violent": 8135,
     "property": 28759,
+    "murder": 186,
+    "rape": 186,
+    "assault": 3609,
+    "burglary": 3781,
+    "larceny": 18787,
+    "vehicle_theft": 6191,
     "cities": [
       {
         "city": "Washington",
@@ -21479,6 +21533,12 @@
     "value": 8873095,
     "violent": 71424,
     "property": 432806,
+    "murder": 656,
+    "rape": 3007,
+    "assault": 43683,
+    "burglary": 101594,
+    "larceny": 294465,
+    "vehicle_theft": 36747,
     "cities": [
       {
         "city": "Alachua",
@@ -26853,6 +26913,12 @@
     "value": 2926644,
     "violent": 21970,
     "property": 164140,
+    "murder": 272,
+    "rape": 859,
+    "assault": 12071,
+    "burglary": 38510,
+    "larceny": 109320,
+    "vehicle_theft": 16331,
     "cities": [
       {
         "city": "Acworth",
@@ -29995,6 +30061,12 @@
     "value": 906349,
     "violent": 2575,
     "property": 31781,
+    "murder": 18,
+    "rape": 203,
+    "assault": 1426,
+    "burglary": 6370,
+    "larceny": 21473,
+    "vehicle_theft": 3938,
     "cities": [
       {
         "city": "Honolulu",
@@ -30023,6 +30095,12 @@
     "value": 854116,
     "violent": 2283,
     "property": 23068,
+    "murder": 8,
+    "rape": 371,
+    "assault": 1721,
+    "burglary": 4326,
+    "larceny": 17677,
+    "vehicle_theft": 1065,
     "cities": [
       {
         "city": "Aberdeen",
@@ -31113,6 +31191,12 @@
     "value": 3560411,
     "violent": 2209,
     "property": 154015,
+    "murder": 541,
+    "rape": 125,
+    "assault": 19675,
+    "burglary": 31426,
+    "larceny": 102259,
+    "vehicle_theft": 20330,
     "cities": [
       {
         "city": "Aurora",
@@ -31231,6 +31315,12 @@
     "value": 3339750,
     "violent": 18209,
     "property": 156910,
+    "murder": 280,
+    "rape": 1277,
+    "assault": 9660,
+    "burglary": 35711,
+    "larceny": 107311,
+    "vehicle_theft": 13888,
     "cities": [
       {
         "city": "Albion",
@@ -33275,6 +33365,12 @@
     "value": 1788960,
     "violent": 7236,
     "property": 61776,
+    "murder": 54,
+    "rape": 727,
+    "assault": 5244,
+    "burglary": 13202,
+    "larceny": 45050,
+    "vehicle_theft": 3524,
     "cities": [
       {
         "city": "Adel",
@@ -35265,6 +35361,12 @@
     "value": 1669647,
     "violent": 7713,
     "property": 64320,
+    "murder": 70,
+    "rape": 747,
+    "assault": 5675,
+    "burglary": 12163,
+    "larceny": 47489,
+    "vehicle_theft": 4688,
     "cities": [
       {
         "city": "Abilene",
@@ -37777,6 +37879,12 @@
     "value": 1902366,
     "violent": 8964,
     "property": 72234,
+    "murder": 101,
+    "rape": 719,
+    "assault": 4810,
+    "burglary": 17009,
+    "larceny": 50288,
+    "vehicle_theft": 4937,
     "cities": [
       {
         "city": "Albany",
@@ -40847,6 +40955,12 @@
     "value": 1431959,
     "violent": 13864,
     "property": 74083,
+    "murder": 337,
+    "rape": 515,
+    "assault": 9231,
+    "burglary": 19248,
+    "larceny": 47801,
+    "vehicle_theft": 7034,
     "cities": [
       {
         "city": "Addis",
@@ -42045,6 +42159,12 @@
     "value": 851417,
     "violent": 1248,
     "property": 24674,
+    "murder": 20,
+    "rape": 304,
+    "assault": 608,
+    "burglary": 4004,
+    "larceny": 19933,
+    "vehicle_theft": 737,
     "cities": [
       {
         "city": "Ashland",
@@ -44107,6 +44227,12 @@
     "value": 1267070,
     "violent": 14714,
     "property": 57644,
+    "murder": 279,
+    "rape": 270,
+    "assault": 8429,
+    "burglary": 13018,
+    "larceny": 36647,
+    "vehicle_theft": 7979,
     "cities": [
       {
         "city": "Aberdeen",
@@ -45539,6 +45665,12 @@
     "value": 5914112,
     "violent": 26270,
     "property": 139113,
+    "murder": 154,
+    "rape": 1513,
+    "assault": 18394,
+    "burglary": 32270,
+    "larceny": 95281,
+    "vehicle_theft": 11562,
     "cities": [
       {
         "city": "Abington",
@@ -50517,6 +50649,12 @@
     "value": 5900251,
     "violent": 41099,
     "property": 206294,
+    "murder": 471,
+    "rape": 2512,
+    "assault": 26191,
+    "burglary": 53715,
+    "larceny": 125271,
+    "vehicle_theft": 29863,
     "cities": [
       {
         "city": "Adrian",
@@ -56233,6 +56371,12 @@
     "value": 3553906,
     "violent": 6978,
     "property": 123304,
+    "murder": 95,
+    "rape": 514,
+    "assault": 6561,
+    "burglary": 20848,
+    "larceny": 94327,
+    "vehicle_theft": 8501,
     "cities": [
       {
         "city": "Albany",
@@ -60041,6 +60185,12 @@
     "value": 1001951,
     "violent": 4354,
     "property": 45949,
+    "murder": 129,
+    "rape": 409,
+    "assault": 1812,
+    "burglary": 13118,
+    "larceny": 29929,
+    "vehicle_theft": 3447,
     "cities": [
       {
         "city": "Aberdeen",
@@ -61347,6 +61497,12 @@
     "value": 3602228,
     "violent": 24067,
     "property": 172546,
+    "murder": 381,
+    "rape": 1230,
+    "assault": 15631,
+    "burglary": 34660,
+    "larceny": 120487,
+    "vehicle_theft": 17399,
     "cities": [
       {
         "city": "Adrian",
@@ -69205,6 +69361,12 @@
     "value": 432105,
     "violent": 1233,
     "property": 16534,
+    "murder": 7,
+    "rape": 147,
+    "assault": 933,
+    "burglary": 1918,
+    "larceny": 13751,
+    "vehicle_theft": 865,
     "cities": [
       {
         "city": "Baker",
@@ -69953,6 +70115,12 @@
     "value": 1153089,
     "violent": 4800,
     "property": 42373,
+    "murder": 59,
+    "rape": 484,
+    "assault": 3004,
+    "burglary": 6864,
+    "larceny": 31853,
+    "vehicle_theft": 3656,
     "cities": [
       {
         "city": "Alliance",
@@ -70989,6 +71157,12 @@
     "value": 2223617,
     "violent": 17625,
     "property": 81481,
+    "murder": 154,
+    "rape": 1033,
+    "assault": 10088,
+    "burglary": 21983,
+    "larceny": 44229,
+    "vehicle_theft": 15269,
     "cities": [
       {
         "city": "Boulder City",
@@ -71251,6 +71425,12 @@
     "value": 1031374,
     "violent": 1654,
     "property": 22062,
+    "murder": 10,
+    "rape": 324,
+    "assault": 968,
+    "burglary": 3351,
+    "larceny": 17623,
+    "vehicle_theft": 1088,
     "cities": [
       {
         "city": "Alexandria",
@@ -73655,6 +73835,12 @@
     "value": 7965083,
     "violent": 26576,
     "property": 177252,
+    "murder": 365,
+    "rape": 1049,
+    "assault": 13002,
+    "burglary": 36567,
+    "larceny": 124433,
+    "vehicle_theft": 19172,
     "cities": [
       {
         "city": "Aberdeen Township",
@@ -82143,6 +82329,12 @@
     "value": 1245045,
     "violent": 8728,
     "property": 62039,
+    "murder": 90,
+    "rape": 807,
+    "assault": 6090,
+    "burglary": 15337,
+    "larceny": 40331,
+    "vehicle_theft": 6510,
     "cities": [
       {
         "city": "Alamogordo",
@@ -83071,6 +83263,12 @@
     "value": 13832063,
     "violent": 68783,
     "property": 295868,
+    "murder": 731,
+    "rape": 1964,
+    "assault": 36438,
+    "burglary": 48631,
+    "larceny": 226558,
+    "vehicle_theft": 20679,
     "cities": [
       {
         "city": "Adams Village",
@@ -89903,6 +90101,12 @@
     "value": 4250968,
     "violent": 29564,
     "property": 235832,
+    "murder": 355,
+    "rape": 1396,
+    "assault": 16231,
+    "burglary": 62588,
+    "larceny": 156315,
+    "vehicle_theft": 16929,
     "cities": [
       {
         "city": "Aberdeen",
@@ -94017,6 +94221,12 @@
     "value": 372487,
     "violent": 892,
     "property": 9720,
+    "murder": 3,
+    "rape": 186,
+    "assault": 634,
+    "burglary": 1501,
+    "larceny": 7554,
+    "vehicle_theft": 665,
     "cities": [
       {
         "city": "Beulah",
@@ -94549,6 +94759,12 @@
     "value": 6172717,
     "violent": 33332,
     "property": 272603,
+    "murder": 474,
+    "rape": 3234,
+    "assault": 12955,
+    "burglary": 73897,
+    "larceny": 175996,
+    "vehicle_theft": 22710,
     "cities": [
       {
         "city": "Aberdeen",
@@ -100301,6 +100517,12 @@
     "value": 2560897,
     "violent": 16631,
     "property": 109191,
+    "murder": 162,
+    "rape": 1213,
+    "assault": 11680,
+    "burglary": 29649,
+    "larceny": 70153,
+    "vehicle_theft": 9389,
     "cities": [
       {
         "city": "Achille",
@@ -103767,6 +103989,12 @@
     "value": 2456151,
     "violent": 8027,
     "property": 98743,
+    "murder": 64,
+    "rape": 872,
+    "assault": 4766,
+    "burglary": 15096,
+    "larceny": 74564,
+    "vehicle_theft": 9083,
     "cities": [
       {
         "city": "Albany",
@@ -105883,6 +106111,12 @@
     "value": 8478268,
     "violent": 44423,
     "property": 232707,
+    "murder": 612,
+    "rape": 2553,
+    "assault": 23473,
+    "burglary": 43489,
+    "larceny": 170188,
+    "vehicle_theft": 19030,
     "cities": [
       {
         "city": "Abington Township",
@@ -120401,6 +120635,12 @@
     "value": 1044626,
     "violent": 2564,
     "property": 28992,
+    "murder": 27,
+    "rape": 255,
+    "assault": 1409,
+    "burglary": 5608,
+    "larceny": 20300,
+    "vehicle_theft": 3084,
     "cities": [
       {
         "city": "Barrington",
@@ -121095,6 +121335,12 @@
     "value": 1442016,
     "violent": 13823,
     "property": 80893,
+    "murder": 113,
+    "rape": 661,
+    "assault": 9589,
+    "burglary": 15662,
+    "larceny": 59227,
+    "vehicle_theft": 6004,
     "cities": [
       {
         "city": "Abbeville",
@@ -123967,6 +124213,12 @@
     "value": 427233,
     "violent": 1168,
     "property": 10457,
+    "murder": 10,
+    "rape": 292,
+    "assault": 759,
+    "burglary": 1659,
+    "larceny": 8174,
+    "vehicle_theft": 624,
     "cities": [
       {
         "city": "Aberdeen",
@@ -125021,6 +125273,12 @@
     "value": 3473419,
     "violent": 35668,
     "property": 187082,
+    "murder": 333,
+    "rape": 1475,
+    "assault": 23713,
+    "burglary": 44054,
+    "larceny": 129066,
+    "vehicle_theft": 13962,
     "cities": [
       {
         "city": "Adamsville",
@@ -129405,6 +129663,12 @@
     "value": 17951581,
     "violent": 102910,
     "property": 813713,
+    "murder": 1100,
+    "rape": 6439,
+    "assault": 61360,
+    "burglary": 182287,
+    "larceny": 559623,
+    "vehicle_theft": 71803,
     "cities": [
       {
         "city": "Abernathy",
@@ -140863,6 +141127,12 @@
     "value": 2044412,
     "violent": 4905,
     "property": 75399,
+    "murder": 32,
+    "rape": 714,
+    "assault": 2897,
+    "burglary": 11662,
+    "larceny": 57741,
+    "vehicle_theft": 5996,
     "cities": [
       {
         "city": "Alpine/Highland",
@@ -142277,6 +142547,12 @@
     "value": 340706,
     "violent": 598,
     "property": 11112,
+    "murder": 2,
+    "rape": 76,
+    "assault": 450,
+    "burglary": 1860,
+    "larceny": 8928,
+    "vehicle_theft": 324,
     "cities": [
       {
         "city": "Barre",
@@ -143169,6 +143445,12 @@
     "value": 2871314,
     "violent": 13198,
     "property": 103822,
+    "murder": 206,
+    "rape": 900,
+    "assault": 6665,
+    "burglary": 17606,
+    "larceny": 79014,
+    "vehicle_theft": 7202,
     "cities": [
       {
         "city": "Abingdon",
@@ -145933,6 +146215,12 @@
     "value": 3847964,
     "violent": 16144,
     "property": 183606,
+    "murder": 131,
+    "rape": 1727,
+    "assault": 8856,
+    "burglary": 34625,
+    "larceny": 127459,
+    "vehicle_theft": 21522,
     "cities": [
       {
         "city": "Aberdeen",
@@ -149273,6 +149561,12 @@
     "value": 339696,
     "violent": 1485,
     "property": 12650,
+    "murder": 13,
+    "rape": 80,
+    "assault": 1054,
+    "burglary": 2283,
+    "larceny": 9665,
+    "vehicle_theft": 702,
     "cities": [
       {
         "city": "Ansted",
@@ -150183,6 +150477,12 @@
     "value": 3716433,
     "violent": 13897,
     "property": 130039,
+    "murder": 125,
+    "rape": 846,
+    "assault": 7895,
+    "burglary": 21336,
+    "larceny": 98478,
+    "vehicle_theft": 10225,
     "cities": [
       {
         "city": "Adams",
@@ -155305,6 +155605,12 @@
     "value": 329006,
     "violent": 938,
     "property": 11678,
+    "murder": 7,
+    "rape": 138,
+    "assault": 716,
+    "burglary": 1581,
+    "larceny": 9580,
+    "vehicle_theft": 517,
     "cities": [
       {
         "city": "Afton",

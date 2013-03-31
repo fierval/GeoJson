@@ -44,6 +44,12 @@ foreach (var line in lines)
                     record.value = 0;
                     record.violent = 0;
                     record.property = 0;
+                    record.murder = 0;
+                    record.rape = 0;
+                    record.assault = 0;
+                    record.burglary = 0;
+                    record.larceny = 0;
+                    record.vehicle_theft = 0;
                     record.cities = new List<dynamic>();
                            
                     recs.Add(state, record);
@@ -74,6 +80,12 @@ foreach (var line in lines)
     record.value = (int)record.value + (int)city.population;
     record.violent = (int)record.violent + (int)city.violent;
     record.property = (int)record.property + (int)city.property;
+    record.murder = (int)record.murder + (int)city.murder;
+    record.rape = (int)record.rape + (int)city.rape;
+    record.assault = (int)record.assault + (int)city.assault;
+    record.burglary = (int)record.burglary + (int)city.burglary;
+    record.larceny = (int)record.larceny + (int)city.larceny;
+    record.vehicle_theft = (int)record.vehicle_theft + (int)city.vehicle_theft;
     record.group = 100000f * ((float) record.violent / (float) record.value);
     (record.cities as List<dynamic>).Add(city);
 }

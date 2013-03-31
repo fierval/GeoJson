@@ -8,6 +8,8 @@ $ ->
   charts = []
   colorScheme = 'PiYG'
 
+  ko.applyBindings(new window.ViewModel())
+
   $("#view_selection a").click(() ->
     view_type = $(this).attr("id")
     view_id = view_type
