@@ -40,11 +40,11 @@ $ ->
     if !update? or !update
       byState.create_vis()
       byState.display()
+      if state?
+        byState.show_cities(state)
     else
-      byState.update_display()
+      byState.update_display(state)
 
-    if state?
-      byState.show_cities(state)
 
   render_map = (state, crimes, update) ->
     if !map?
@@ -77,6 +77,11 @@ $ ->
     else
       render(type, state, crimes, update)
 
+  set_current_state = (id, st) ->
+    ret = id
+    if st?
+      [ret, st].join(";")
+
   $(window).bind 'hashchange', (e) ->
     states = ({id, value} for id, value of $.bbq.getState())
     view = state for state in states when state.id? and state.id != "crimes"
@@ -101,8 +106,10 @@ $ ->
       if !view?
         view = {id: 'all_states'}
 
-      update = current_state == view.id
-      current_state = view.id
+      viewModel.crime(crimes)
+      current = set_current_state(view.id, view.value)
+      update = current_state == current
+      current_state = current
       load_visual(view.id, (if view.value == "" then undefined else view.value), crimes, update)
       $('#view_selection a').removeClass('active')
       $("#view_selection a##{view.id}").addClass('active')

@@ -86,27 +86,28 @@ class @StatesBreakDown extends BreakdownChart
   # this will actually show the cities
   show_cities: (i) =>
     data = @data[i].cities
-    byCity = new AllStates(@id, data, @colorScheme, @domain)
+    @byCity = new AllStates(@id, data, @colorScheme, @domain)
+    @byCity.crimes = @crimes
     if @data[i].id == "NEW_JERSEY" or @data[i].id == "CONNECTICUT"
-      byCity.height = 900
-      byCity.center = {x: byCity.width / 2, y: byCity.height / 2}
-      byCity.max_range = 60
-      byCity.scale()
-      byCity.update_data()
+      @byCity.height = 900
+      @byCity.center = {x: @byCity.width / 2, y: @byCity.height / 2}
+      @byCity.max_range = 60
+      @byCity.scale()
+      @byCity.update_data()
 
-    byCity.create_vis()
-    byCity.display()
-    byCity.bubble_scale.svg.attr("height", byCity.bubble_scale.height + 80)
-    byCity.bubble_scale.svg
+    @byCity.create_vis()
+    @byCity.display()
+    @byCity.bubble_scale.svg.attr("height", @byCity.bubble_scale.height + 80)
+    @byCity.bubble_scale.svg
       .append("text")
-      .attr("x", byCity.bubble_scale.width/2 + 5)
-      .attr("y", byCity.bubble_scale.height + 20)
+      .attr("x", @byCity.bubble_scale.width/2 + 5)
+      .attr("y", @byCity.bubble_scale.height + 20)
       .attr("text-anchor", "middle")
       .style("font-size", "18")
       .text(@data[i].name)
 
     link = '<a href="#by_state">Back to the states view</a>'
-    $("##{byCity.bubble_scale.id}").append(link)
+    $("##{@byCity.bubble_scale.id}").append(link)
 
   update_data: () =>
     super()
@@ -115,8 +116,17 @@ class @StatesBreakDown extends BreakdownChart
       @data.forEach (d) =>
                     d.group = d3.sum(d[crime] for crime in @crimes) / d.value * 100000
 
-  update_display: () =>
+  update_display: (state) =>
     @update_data()
     that = this
-    @get_groups().selectAll("circle").transition().duration(1000).attr("class", (d) -> that.color_class(d.group))
-      .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))
+
+    if state?
+      if !@byCity?
+        @show_cities(state)
+      else
+        @byCity.crimes = @crimes
+        @byCity.cleanup()
+        @byCity.update_display()
+    else
+      @get_groups().selectAll("circle").transition().duration(1000).attr("class", (d) -> that.color_class(d.group))
+        .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))

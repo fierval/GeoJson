@@ -10,13 +10,7 @@ class @ViewModel
         res = $.grep(@crimes, (c) -> c.type == type )[0]
         @crimes.indexOf(res)
 
-      @toggle_type = () =>
-        if @type() == "violent"
-          @type("property")
-        else
-          @type("violent")
-
-      # clicked radio
+      # clicked checkbox
       @get_crimes = (current) =>
         # normally, prevent the default click action
         # so click is reflected correctly on checkboxes
