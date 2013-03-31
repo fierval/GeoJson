@@ -52,6 +52,10 @@ class @BreakdownChart extends BubbleChart
       .attr("text-anchor", "middle")
       .text((d) -> that.get_group_title(d))
 
+  get_groups: () =>
+    @vis.selectAll("g.cell")
+      .data(@data, (d) -> d.id)
+
   getX: (i) =>
     @xStart + @xDelta * (i % @groupsPerLine)
 

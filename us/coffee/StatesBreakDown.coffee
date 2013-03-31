@@ -1,10 +1,17 @@
 class @StatesBreakDown extends BreakdownChart
-  constructor: (id, data, color) ->
+  constructor: (id, data, color, domain) ->
     super(id, data, color)
 
-    @domain = d3.range(100, 1700, 200)
+    @domain = if domain? then domain else d3.range(100, 1700, 200)
     @color_class =
       d3.scale.threshold().domain(@domain).range(("q#{i}-9" for i in [8..0]))
+
+    @crimes = []
+    @legend_text =
+      () =>
+        text = ("< #{e}" for e in @domain)
+        text.push("#{@domain[@domain.length - 1]} or more")
+        text
 
   create_vis: () =>
     super()
@@ -12,13 +19,11 @@ class @StatesBreakDown extends BreakdownChart
     # since we are using a threshold scale, we need to make sure we fall into the bucket
     # we promise to fall into in the legend text
     @legend = new Legend(@vis,
-                         ((i) =>
-                           @color_class(@domain[i] - 1)),
-                         ["< 100", " < 300", "< 500", "< 700", "< 900",
-                          "< 1100", "< 1300", "< 1500", "1500 or more"],
-                         'Violent crimes per 100,000 population.',
-                         {x: @getX(0) + @xDelta / 4, y: 40}
-                        )
+      ((i) => @color_class(@domain[i] - 1)),
+      @legend_text(),
+      'Crime per 100,000 population',
+      {x: 75, y: 40}
+    )
     @legend.show(true)
     @create_scale()
 
@@ -47,8 +52,8 @@ class @StatesBreakDown extends BreakdownChart
 
   show_details: (data) =>
     content =
-      "Population: #{@fixed_formatter(data.value)}<br/>Violent: #{@fixed_formatter(data.violent)}<br />Property: #{@fixed_formatter(data.property)} <br />"
-    content += "Violent Crime per 100,000: #{@percent_formatter(data.group)}"
+        "Population: #{@fixed_formatter(data.value)}<br/>Crime: #{@fixed_formatter(d3.sum(data[crime] for crime in @crimes))}<br />"
+    content += "Crime per 100,000: #{@percent_formatter(data.group)}"
 
     @tip = new Opentip("##{data.id}", content, "",
                        {style: "glass", target: true, showOn: "creation", stem: "middle", tiptJoint: "middle"})
@@ -81,7 +86,7 @@ class @StatesBreakDown extends BreakdownChart
   # this will actually show the cities
   show_cities: (i) =>
     data = @data[i].cities
-    byCity = new AllStates(@id, data, @colorScheme, d3.range(100, 900, 100))
+    byCity = new AllStates(@id, data, @colorScheme, @domain)
     if @data[i].id == "NEW_JERSEY" or @data[i].id == "CONNECTICUT"
       byCity.height = 900
       byCity.center = {x: byCity.width / 2, y: byCity.height / 2}
@@ -100,5 +105,18 @@ class @StatesBreakDown extends BreakdownChart
       .style("font-size", "18")
       .text(@data[i].name)
 
-    link = '<a href="#by_state">Click here or browser "<-" button to return to the states view</a>'
+    link = '<a href="#by_state">Back to the states view</a>'
     $("##{byCity.bubble_scale.id}").append(link)
+
+  update_data: () =>
+    super()
+
+    if @crimes.length > 0
+      @data.forEach (d) =>
+                    d.group = d3.sum(d[crime] for crime in @crimes) / d.value * 100000
+
+  update_display: () =>
+    @update_data()
+    that = this
+    @get_groups().selectAll("circle").transition().duration(1000).attr("class", (d) -> that.color_class(d.group))
+      .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))

@@ -3,14 +3,18 @@
 # data - crime data
 # color - Cynthia Brewer's color scheme
 class @CrimeUsMap extends UsMap
-  constructor: (id, geometry, data, color) ->
+  constructor: (id, geometry, data, color, domain) ->
     super(id, geometry)
 
     @delay = 4000
     @data = data
-    @allStates = new AllStates(id, d3.values(data), color)
+    @allStates = new AllStates(id, d3.values(data), color, domain)
+    @crimes = []
 
   display: () =>
+    @allStates.crimes = @crimes
+    @allStates.update_data()
+
     super()
     @legend = new Legend(@enclosingContainer,
                          ((i) => @allStates.color_class(@allStates.domain[i] - 1)),

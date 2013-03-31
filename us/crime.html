@@ -25,16 +25,13 @@
     <div class="row-fluid">
         <div class="span2"><h5>US Crime 2008</h5>
             <fieldset data-bind="foreach: crimes">
-                <label class="radio">
-                    <input type="radio" data-bind="value: type, checked: $parent.type, click: $root.get_crimes">
-                    <span data-bind="text: $parent.capitalize(type)"></span>
-                </label>
+                <span data-bind="text: $parent.capitalize(type)"></span>
 
                 <div class=row-fluid>
                     <div class="span1"></div>
                     <div class="span11" data-bind="foreach: crime">
                         <label class="checkbox">
-                        <input type="checkbox" data-bind="value: $data, checked: $root.crime, click: $root.switch_crimes">
+                        <input type="checkbox" data-bind="value: $data, checked: $root.crime, click: $root.get_crimes">
                         <span data-bind="text: $root.capitalize($data)"></span>
                         </label>
                     </div>
