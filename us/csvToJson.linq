@@ -50,6 +50,7 @@ foreach (var line in lines)
                     record.burglary = 0;
                     record.larceny = 0;
                     record.vehicle_theft = 0;
+                    record.arson = 0;
                     record.cities = new List<dynamic>();
                            
                     recs.Add(state, record);
@@ -86,11 +87,9 @@ foreach (var line in lines)
     record.burglary = (int)record.burglary + (int)city.burglary;
     record.larceny = (int)record.larceny + (int)city.larceny;
     record.vehicle_theft = (int)record.vehicle_theft + (int)city.vehicle_theft;
+    record.arson = (int)record.arson + (int)city.arson;
     record.group = 100000f * ((float) record.violent / (float) record.value);
     (record.cities as List<dynamic>).Add(city);
 }
 
-var json = JObject.FromObject(recs);
-String jS = json.ToString();
-
-File.WriteAllText(@"C:\Users\boris\Dropbox\Algorithms\geojson\us\crime.json", jS);
+File.WriteAllText(@"C:\Users\boris\Dropbox\Algorithms\geojson\us\crime.json", JObject.FromObject(recs).ToString());

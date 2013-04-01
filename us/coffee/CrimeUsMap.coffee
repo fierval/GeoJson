@@ -19,7 +19,7 @@ class @CrimeUsMap extends UsMap
     @legend = new Legend(@enclosingContainer,
                          ((i) => @allStates.color_class(@allStates.domain[i] - 1)),
                          @allStates.legend_text(),
-                         'Violent crimes per 100,000 population',
+                         'Crime per 100,000 population',
                          {x: 75, y: 40}
                         )
     @legend.show(true)
@@ -35,5 +35,5 @@ class @CrimeUsMap extends UsMap
   show_details: (data) =>
     @allStates.show_details(@data[data.properties.name.toUpperCase()])
 
-  hide_details: (data) =>
+  hide_details: () =>
     @allStates.hide_details()

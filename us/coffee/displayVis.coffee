@@ -1,5 +1,4 @@
 $ ->
-  view_id = $("#view_selection a.btn.active").attr("id");
   byState = null
   allStates = null
   crime_data = null
@@ -10,7 +9,7 @@ $ ->
   #colorScheme = 'PiYG'
 
   current_state = ''
-  domain = [20, 50, 100, 200, 400, 800, 1500, 3000]
+  domain = [10, 20, 50, 100, 200, 400, 800, 1500]
   viewModel = new window.ViewModel()
   ko.applyBindings(viewModel)
 
@@ -89,11 +88,6 @@ $ ->
 
     for chart in charts
       do (chart) -> chart?.cleanup()
-
-    # we need to fix the location here and quit
-    # this is either first invocation or switching tabs
-    if !crimes? and viewModel.crime().length == 0
-        viewModel.crime(["murder", "rape", "assault"])
 
     # not the first time, we are switching tabs
     if !crimes?

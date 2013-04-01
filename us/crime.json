@@ -11,6 +11,7 @@
     "burglary": 34299,
     "larceny": 94377,
     "vehicle_theft": 9679,
+    "arson": 291,
     "cities": [
       {
         "city": "Abbeville",
@@ -4311,6 +4312,7 @@
     "burglary": 1979,
     "larceny": 11965,
     "vehicle_theft": 1199,
+    "arson": 126,
     "cities": [
       {
         "city": "Anchorage",
@@ -4813,6 +4815,7 @@
     "burglary": 46960,
     "larceny": 125572,
     "vehicle_theft": 32827,
+    "arson": 1453,
     "cities": [
       {
         "city": "Apache Junction",
@@ -5981,6 +5984,7 @@
     "burglary": 24028,
     "larceny": 55046,
     "vehicle_theft": 4639,
+    "arson": 418,
     "cities": [
       {
         "city": "Arkadelphia",
@@ -8553,6 +8557,7 @@
     "burglary": 193077,
     "larceny": 553753,
     "vehicle_theft": 163209,
+    "arson": 8400,
     "cities": [
       {
         "city": "Adelanto",
@@ -16831,6 +16836,7 @@
     "burglary": 20853,
     "larceny": 76466,
     "vehicle_theft": 10788,
+    "arson": 924,
     "cities": [
       {
         "city": "Alamosa",
@@ -19205,6 +19211,7 @@
     "burglary": 11689,
     "larceny": 53643,
     "vehicle_theft": 7063,
+    "arson": 364,
     "cities": [
       {
         "city": "Ansonia",
@@ -20859,6 +20866,7 @@
     "burglary": 2100,
     "larceny": 8117,
     "vehicle_theft": 1014,
+    "arson": 36,
     "cities": [
       {
         "city": "Bethany Beach",
@@ -21505,6 +21513,7 @@
     "burglary": 3781,
     "larceny": 18787,
     "vehicle_theft": 6191,
+    "arson": 51,
     "cities": [
       {
         "city": "Washington",
@@ -21539,6 +21548,7 @@
     "burglary": 101594,
     "larceny": 294465,
     "vehicle_theft": 36747,
+    "arson": 1592,
     "cities": [
       {
         "city": "Alachua",
@@ -26919,6 +26929,7 @@
     "burglary": 38510,
     "larceny": 109320,
     "vehicle_theft": 16331,
+    "arson": 508,
     "cities": [
       {
         "city": "Acworth",
@@ -30067,6 +30078,7 @@
     "burglary": 6370,
     "larceny": 21473,
     "vehicle_theft": 3938,
+    "arson": 365,
     "cities": [
       {
         "city": "Honolulu",
@@ -30101,6 +30113,7 @@
     "burglary": 4326,
     "larceny": 17677,
     "vehicle_theft": 1065,
+    "arson": 169,
     "cities": [
       {
         "city": "Aberdeen",
@@ -31197,6 +31210,7 @@
     "burglary": 31426,
     "larceny": 102259,
     "vehicle_theft": 20330,
+    "arson": 772,
     "cities": [
       {
         "city": "Aurora",
@@ -31321,6 +31335,7 @@
     "burglary": 35711,
     "larceny": 107311,
     "vehicle_theft": 13888,
+    "arson": 1176,
     "cities": [
       {
         "city": "Albion",
@@ -33371,6 +33386,7 @@
     "burglary": 13202,
     "larceny": 45050,
     "vehicle_theft": 3524,
+    "arson": 493,
     "cities": [
       {
         "city": "Adel",
@@ -35367,6 +35383,7 @@
     "burglary": 12163,
     "larceny": 47489,
     "vehicle_theft": 4688,
+    "arson": 560,
     "cities": [
       {
         "city": "Abilene",
@@ -37885,6 +37902,7 @@
     "burglary": 17009,
     "larceny": 50288,
     "vehicle_theft": 4937,
+    "arson": 276,
     "cities": [
       {
         "city": "Albany",
@@ -40961,6 +40979,7 @@
     "burglary": 19248,
     "larceny": 47801,
     "vehicle_theft": 7034,
+    "arson": 439,
     "cities": [
       {
         "city": "Addis",
@@ -42165,6 +42184,7 @@
     "burglary": 4004,
     "larceny": 19933,
     "vehicle_theft": 737,
+    "arson": 152,
     "cities": [
       {
         "city": "Ashland",
@@ -44233,6 +44253,7 @@
     "burglary": 13018,
     "larceny": 36647,
     "vehicle_theft": 7979,
+    "arson": 647,
     "cities": [
       {
         "city": "Aberdeen",
@@ -45671,6 +45692,7 @@
     "burglary": 32270,
     "larceny": 95281,
     "vehicle_theft": 11562,
+    "arson": 632,
     "cities": [
       {
         "city": "Abington",
@@ -50655,6 +50677,7 @@
     "burglary": 53715,
     "larceny": 125271,
     "vehicle_theft": 29863,
+    "arson": 2180,
     "cities": [
       {
         "city": "Adrian",
@@ -56377,6 +56400,7 @@
     "burglary": 20848,
     "larceny": 94327,
     "vehicle_theft": 8501,
+    "arson": 820,
     "cities": [
       {
         "city": "Albany",
@@ -60191,6 +60215,7 @@
     "burglary": 13118,
     "larceny": 29929,
     "vehicle_theft": 3447,
+    "arson": 246,
     "cities": [
       {
         "city": "Aberdeen",
@@ -61503,6 +61528,7 @@
     "burglary": 34660,
     "larceny": 120487,
     "vehicle_theft": 17399,
+    "arson": 1210,
     "cities": [
       {
         "city": "Adrian",
@@ -69367,6 +69393,7 @@
     "burglary": 1918,
     "larceny": 13751,
     "vehicle_theft": 865,
+    "arson": 96,
     "cities": [
       {
         "city": "Baker",
@@ -70121,6 +70148,7 @@
     "burglary": 6864,
     "larceny": 31853,
     "vehicle_theft": 3656,
+    "arson": 87,
     "cities": [
       {
         "city": "Alliance",
@@ -71163,6 +71191,7 @@
     "burglary": 21983,
     "larceny": 44229,
     "vehicle_theft": 15269,
+    "arson": 533,
     "cities": [
       {
         "city": "Boulder City",
@@ -71431,6 +71460,7 @@
     "burglary": 3351,
     "larceny": 17623,
     "vehicle_theft": 1088,
+    "arson": 270,
     "cities": [
       {
         "city": "Alexandria",
@@ -73841,6 +73871,7 @@
     "burglary": 36567,
     "larceny": 124433,
     "vehicle_theft": 19172,
+    "arson": 1108,
     "cities": [
       {
         "city": "Aberdeen Township",
@@ -82335,6 +82366,7 @@
     "burglary": 15337,
     "larceny": 40331,
     "vehicle_theft": 6510,
+    "arson": 322,
     "cities": [
       {
         "city": "Alamogordo",
@@ -83269,6 +83301,7 @@
     "burglary": 48631,
     "larceny": 226558,
     "vehicle_theft": 20679,
+    "arson": 911,
     "cities": [
       {
         "city": "Adams Village",
@@ -90107,6 +90140,7 @@
     "burglary": 62588,
     "larceny": 156315,
     "vehicle_theft": 16929,
+    "arson": 1271,
     "cities": [
       {
         "city": "Aberdeen",
@@ -94227,6 +94261,7 @@
     "burglary": 1501,
     "larceny": 7554,
     "vehicle_theft": 665,
+    "arson": 77,
     "cities": [
       {
         "city": "Beulah",
@@ -94765,6 +94800,7 @@
     "burglary": 73897,
     "larceny": 175996,
     "vehicle_theft": 22710,
+    "arson": 3070,
     "cities": [
       {
         "city": "Aberdeen",
@@ -100523,6 +100559,7 @@
     "burglary": 29649,
     "larceny": 70153,
     "vehicle_theft": 9389,
+    "arson": 823,
     "cities": [
       {
         "city": "Achille",
@@ -103995,6 +104032,7 @@
     "burglary": 15096,
     "larceny": 74564,
     "vehicle_theft": 9083,
+    "arson": 950,
     "cities": [
       {
         "city": "Albany",
@@ -106117,6 +106155,7 @@
     "burglary": 43489,
     "larceny": 170188,
     "vehicle_theft": 19030,
+    "arson": 1130,
     "cities": [
       {
         "city": "Abington Township",
@@ -120641,6 +120680,7 @@
     "burglary": 5608,
     "larceny": 20300,
     "vehicle_theft": 3084,
+    "arson": 197,
     "cities": [
       {
         "city": "Barrington",
@@ -121341,6 +121381,7 @@
     "burglary": 15662,
     "larceny": 59227,
     "vehicle_theft": 6004,
+    "arson": 318,
     "cities": [
       {
         "city": "Abbeville",
@@ -124219,6 +124260,7 @@
     "burglary": 1659,
     "larceny": 8174,
     "vehicle_theft": 624,
+    "arson": 93,
     "cities": [
       {
         "city": "Aberdeen",
@@ -125279,6 +125321,7 @@
     "burglary": 44054,
     "larceny": 129066,
     "vehicle_theft": 13962,
+    "arson": 777,
     "cities": [
       {
         "city": "Adamsville",
@@ -129669,6 +129712,7 @@
     "burglary": 182287,
     "larceny": 559623,
     "vehicle_theft": 71803,
+    "arson": 4891,
     "cities": [
       {
         "city": "Abernathy",
@@ -141133,6 +141177,7 @@
     "burglary": 11662,
     "larceny": 57741,
     "vehicle_theft": 5996,
+    "arson": 242,
     "cities": [
       {
         "city": "Alpine/Highland",
@@ -142553,6 +142598,7 @@
     "burglary": 1860,
     "larceny": 8928,
     "vehicle_theft": 324,
+    "arson": 49,
     "cities": [
       {
         "city": "Barre",
@@ -143451,6 +143497,7 @@
     "burglary": 17606,
     "larceny": 79014,
     "vehicle_theft": 7202,
+    "arson": 673,
     "cities": [
       {
         "city": "Abingdon",
@@ -146221,6 +146268,7 @@
     "burglary": 34625,
     "larceny": 127459,
     "vehicle_theft": 21522,
+    "arson": 1064,
     "cities": [
       {
         "city": "Aberdeen",
@@ -149567,6 +149615,7 @@
     "burglary": 2283,
     "larceny": 9665,
     "vehicle_theft": 702,
+    "arson": 119,
     "cities": [
       {
         "city": "Ansted",
@@ -150483,6 +150532,7 @@
     "burglary": 21336,
     "larceny": 98478,
     "vehicle_theft": 10225,
+    "arson": 750,
     "cities": [
       {
         "city": "Adams",
@@ -155611,6 +155661,7 @@
     "burglary": 1581,
     "larceny": 9580,
     "vehicle_theft": 517,
+    "arson": 92,
     "cities": [
       {
         "city": "Afton",
