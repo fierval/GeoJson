@@ -37,6 +37,10 @@ class @Search
             error = () -> $(findEntity).closest('.control-group').addClass('error')
             good = () -> $(findEntity).closest('.control-group').removeClass('error')
 
+            if @found?
+              @visual.hide_details(@found)
+              @found = null
+
             good()
             # select classes that start with our query string
             query = query.toUpperCase()
