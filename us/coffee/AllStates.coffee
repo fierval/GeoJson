@@ -9,6 +9,8 @@ class @AllStates extends @BubbleChart
     @color_class =
       d3.scale.threshold().domain(@domain).range(("q#{i}-9" for i in [8..0]))
 
+    @tips = {}
+
     @legend_text =
       () =>
         text = ("< #{e}" for e in @domain)
@@ -43,16 +45,30 @@ class @AllStates extends @BubbleChart
                          )
     @legend.show(true)
     @create_scale({x:@width, y: -@height + 30})
+    @search = new Search(@id, this, ((d) -> d.name),((data, text) -> $.grep(data, (d) -> d.name == text)[0]), {x: @width, y: -700})
+    @search.create_search_box()
 
   show_details: (data) =>
     content =
       "Population: #{@fixed_formatter(data.value)}<br/>Crime: #{@fixed_formatter(d3.sum(data[crime] for crime in @crimes))}<br />"
     content += "Crime per 100,000: #{@percent_formatter(data.group)}"
 
-    @tip = new Opentip("##{data.id}", content, data.name, {style: "glass", target: true, showOn: "creation", stem: "middle", tiptJoint: "middle"})
+    d3.select("##{data.id}").attr("stroke", "black").attr("stroke-width", 4)
+    tip = @tips[data.id]
+    if !tip?
+      tip = new Opentip("##{data.id}", content, data.name, {style: "glass", fixed: true, target: true, tipJoint: "left bottom"})
+      @tips[data.id] = tip
+    else
+      tip.setContent(content)
+
+    $("#opentip-#{tip.id}").offset({left: data.x, top: data.y})
+    tip.show()
+
+
 
   hide_details: (data) =>
-    @tip?.hide()
+    @tips[data.id]?.hide()
+    d3.select("##{data.id}").attr("stroke", (d) -> d3.rgb($(this).css("fill")).darker()).attr("stroke-width", 2)
 
   move_towards_center: (alpha) =>
     (d) =>
@@ -61,7 +77,8 @@ class @AllStates extends @BubbleChart
 
   cleanup: () =>
     super()
-    @tip?.hide()
+    tip?.hide() for key, tip of @tips
+    undefined
 
   display: () =>
     @update_data()

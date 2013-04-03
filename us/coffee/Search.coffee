@@ -1,10 +1,16 @@
 class @Search
-    constructor: (container, visual, mapData, processFoundItem) ->
+    constructor: (container, visual, mapData, processFoundItem, anchor) ->
       @id = "##{container.removeLeadHash()}"
       @visual = visual
       @data = visual.data
-      @mapData = mapData
       @processFoundItem = processFoundItem
+      @anchor = anchor
+      # a list of classes to choose from
+      # for the typeahead
+      @entities = @data.map(mapData)
+      $.fn.typeahead.Constructor::blur = () ->
+        that = this;
+        setTimeout((() -> that.hide()), 250)
 
     # creates the UI
     # for searching classes
@@ -12,10 +18,10 @@ class @Search
       findEntity = "#findEntity"
 
       if $(findEntity).length < 1
-        html = '<div class="control-group" style="left: ' + 800 + 'px; top: -315px; position: relative; width: 100px" >
-                                    <label class="control-label" for="findEntity">Find Class:</label>
+        html = '<div class="control-group" style="left: ' + @anchor.x + 'px; top: ' + @anchor.y + 'px; position: relative; width: 200px" >
+                                    <label class="control-label" for="findEntity">Find:</label>
                                     <div class="controls">
-                                        <input type="text" autocomplete="off" style="width: 50px" id="findEntity" name="findEntity">
+                                        <input type="text" autocomplete="off" style="width: 150px" id="findEntity" name="findEntity">
                                     </div>
                             </div>'
 
@@ -31,22 +37,12 @@ class @Search
             error = () -> $(findEntity).closest('.control-group').addClass('error')
             good = () -> $(findEntity).closest('.control-group').removeClass('error')
 
-            if @found?
-              @visual.hide_details(null, 0, visual.vis.select(@found))
-              @found = undefined
-
-            # a list of classes to choose from
-            # for the typeahead
-            entities = @data.map(mapData)
-
             good()
             # select classes that start with our query string
             query = query.toUpperCase()
-            res = (entity for entity in entities when entity.slice(0, query.length) == query)
+            res = (entity for entity in @entities when entity.slice(0, query.length).toUpperCase() == query)
             if res.length == 0
                 error()
-            else
-                @search(query)
             res
 
           updater: (item) ->
@@ -56,21 +52,17 @@ class @Search
           highlighter: (item) ->
             "<strong>#{item.slice(0, this.query.length)}</strong>#{item.slice(this.query.length)}"
         )
-        # we want to perform lookup on focus
-        # and if the textbox contains text already
-        # we don't want to show the menu
-        $(findEntity).focus(
-          () =>
-            typeahead = $(findEntity).data('typeahead')
-            typeahead.lookup()
-            if @found?
-              typeahead.hide()
-        )
-      # called when we have made our selection
-      # by picking it from the typeahead menu
-      search: (text) =>
-        @found = @processFoundItem(text)
-        element = @vis.select(@found)
 
-        @visual.show_details(@found, 0, element)
-        text
+        $(findEntity).focusout(
+          () =>
+            if @found?
+              @visual.hide_details(@found)
+        )
+    # called when we have made our selection
+    # by picking it from the typeahead menu
+    search: (text) =>
+      @found = @processFoundItem(@data, text)
+      element = @visual.vis.select("##{@found.id}")
+
+      @visual.show_details(@found, 0, element)
+      text

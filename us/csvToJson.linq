@@ -72,7 +72,7 @@ foreach (var line in lines)
     {
         continue;
     }
-    city.id = cityId++;
+    city.id = "city_" + (cityId++).ToString();
     city.value = city.population;
     // remove the last digit off of the end of the city name
     city.city = city.city.ToString().TrimEnd('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
