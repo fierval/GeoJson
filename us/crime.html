@@ -22,19 +22,26 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span1"><h5>US Crime 2008</h5>
-            <fieldset data-bind="foreach: crimes">
-                <span data-bind="text: $parent.capitalize(type)"></span>
+            <fieldset>
+                <div data-bind="foreach: crimes">
+                    <span data-bind="text: $parent.capitalize(type)"></span>
 
-                <div class=row-fluid>
-                    <div class="span1"></div>
-                    <div class="span11" data-bind="foreach: crime">
-                        <label class="checkbox">
-                        <input type="checkbox" data-bind="value: $data, checked: $root.crime, click: $root.get_crimes">
-                        <span data-bind="text: $root.capitalize($data)"></span>
-                        </label>
+                    <div class=row-fluid>
+                        <div class="span1"></div>
+                        <div class="span11" data-bind="foreach: crime">
+                            <label class="checkbox">
+                                <input type="checkbox"
+                                       data-bind="value: $data, checked: $root.crime, click: $root.get_crimes">
+                                <span data-bind="text: $root.capitalize($data)"></span>
+                            </label>
+                        </div>
                     </div>
+                    <br/>
                 </div>
-                <br/>
+                <label class="checkbox">
+                    <input type="checkbox" data-bind="checked: arrange, click: sort_crime()" >
+                    <span>Arrange</span>
+                </label>
             </fieldset>
         </div>
         <div class="span11">
@@ -54,7 +61,7 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="js/opentip-jquery.js"></script>
 <script src="js/jquery.ba-bbq.js"></script>
-<script src="js/knockout-2.2.1.js"></script>
+<script src="js/knockout-2.2.1.debug.js"></script>
 <script src="js/bootstrap.js"></script>
 
 

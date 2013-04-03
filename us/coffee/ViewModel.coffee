@@ -6,14 +6,16 @@ class @ViewModel
       @capitalize = (text) -> text.split('_').map((t) -> t.slice(0,1).toUpperCase() + t.slice(1)).join(' ')
       @crimes = [{crime: @violent, type:"violent"}, {crime: @property, type:"property"}]
 
+      @arrange = ko.observable(false)
+
       @ofType = (type) =>
         res = $.grep(@crimes, (c) -> c.type == type )[0]
         @crimes.indexOf(res)
 
       # clicked checkbox
       @get_crimes = () =>
-        # normally, prevent the default click action
-        # so click is reflected correctly on checkboxes
-        res = (crime for crime in @crime())
-        $.bbq.pushState({crimes: res.join(';')})
+        $.bbq.pushState({crimes: @crime().join(';')})
         true
+
+      @sort_crime = () =>
+        $.bbq.pushState({sort: @arrange()})

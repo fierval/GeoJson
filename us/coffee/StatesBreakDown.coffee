@@ -122,17 +122,17 @@ class @StatesBreakDown extends BreakdownChart
       @data.forEach (d) =>
                     d.group = d3.sum(d[crime] for crime in @crimes) / d.value * 100000
 
-  update_display: (state) =>
+  update_display: (state, sort) =>
     @update_data()
     that = this
 
     if state?
       if !@byCity?
-        @show_cities(state)
+        @show_cities(state, sort)
       else
         @byCity.crimes = @crimes
         @byCity.cleanup()
-        @byCity.update_display()
+        @byCity.update_display(sort)
     else
       @get_groups().selectAll("circle").transition().duration(1000).attr("class", (d) -> that.color_class(d.group))
         .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))

@@ -4,12 +4,15 @@ class @AllStates extends @BubbleChart
     @height = 900
     @max_range = 90
     @scale()
+    @arrange = false
 
     @domain = if domain? then domain else d3.range(100, 1700, 200)
     @color_class =
       d3.scale.threshold().domain(@domain).range(("q#{i}-9" for i in [8..0]))
 
     @tips = {}
+    # map for sorting bubbles based on their category
+    @map_group = d3.scale.ordinal().domain(@domain).range([4..-4])
 
     @legend_text =
       () =>
@@ -18,6 +21,7 @@ class @AllStates extends @BubbleChart
         text
 
     @crimes = []
+    @boundingRadius = @width / 4.2
 
   update_data: () =>
     @data
@@ -61,19 +65,22 @@ class @AllStates extends @BubbleChart
     else
       tip.setContent(content)
 
-   # $("#opentip-#{tip.id}").offset({left: data.x, top: data.y})
     tip.show()
-
-
 
   hide_details: (data) =>
     @tips[data.id]?.hide()
     d3.select("##{data.id}").attr("stroke", (d) -> d3.rgb($(this).css("fill")).darker()).attr("stroke-width", 2)
 
   move_towards_center: (alpha) =>
-    (d) =>
-      d.x = d.x + (@center.x - d.x) * @damper * alpha
-      d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
+    if (!@arrange)
+      (d) =>
+        d.x = d.x + (@center.x - d.x) * @damper * alpha
+        d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
+    else
+      (d) =>
+        targetY = @center.y - (@map_group(d.group) / 8) * @boundingRadius
+        d.y = d.y + (targetY - d.y) * @damper * alpha * 1.2
+        d.x = d.x + (@center.x - d.x) * @damper * alpha
 
   cleanup: () =>
     super()
@@ -84,7 +91,7 @@ class @AllStates extends @BubbleChart
     @update_data()
     super()
 
-  update_display: () =>
+  update_display: (sort) =>
     @update_data()
     circles = @get_bubble(@vis, @data)
 
@@ -93,3 +100,10 @@ class @AllStates extends @BubbleChart
       .attr("class", (d) => @color_class(d.group))
       .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))
 
+    if sort != @arrange
+      @rearrange()
+
+  rearrange: () =>
+    circles = @get_bubble(@vis, @data)
+    force = @force_layout(circles, @data, [@xDelta, @yDelta], @move_towards_center)
+    force.start()
