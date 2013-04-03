@@ -1,6 +1,6 @@
 class @ViewModel
     constructor: () ->
-      @violent = ["murder", "rape", "assault"]
+      @violent = ["murder", "rape", "robbery", "assault"]
       @property = ["arson", "burglary", "larceny", "vehicle_theft"]
       @crime = ko.observableArray([])
       @capitalize = (text) -> text.split('_').map((t) -> t.slice(0,1).toUpperCase() + t.slice(1)).join(' ')

@@ -46,6 +46,7 @@ foreach (var line in lines)
                     record.property = 0;
                     record.murder = 0;
                     record.rape = 0;
+                    record.robbery = 0;
                     record.assault = 0;
                     record.burglary = 0;
                     record.larceny = 0;
@@ -81,6 +82,7 @@ foreach (var line in lines)
     record.value = (int)record.value + (int)city.population;
     record.violent = (int)record.violent + (int)city.violent;
     record.property = (int)record.property + (int)city.property;
+    record.robbery = (int) record.robbery + (int) city.robbery;
     record.murder = (int)record.murder + (int)city.murder;
     record.rape = (int)record.rape + (int)city.rape;
     record.assault = (int)record.assault + (int)city.assault;
