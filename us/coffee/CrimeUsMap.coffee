@@ -14,6 +14,7 @@ class @CrimeUsMap extends UsMap
   display: () =>
     @allStates.crimes = @crimes
     @allStates.update_data()
+    @allStates.cleanup()
 
     super()
     @legend = new Legend(@enclosingContainer,
@@ -29,7 +30,10 @@ class @CrimeUsMap extends UsMap
     color_class = (state) =>
       @allStates.color_class(@data[state.toUpperCase()].group)
 
-    @states.style("fill", null).attr("class", (d) -> color_class(d.properties.name))
+    @states = @states.style("fill", null).attr("class", (d) -> color_class(d.properties.name))
+    @states = @states.attr("stroke-width", 2)
+              .attr("stroke", (d) -> d3.rgb($(this).css("fill")).darker())
+
     @create_cities()
 
   show_details: (data) =>

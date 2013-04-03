@@ -13,6 +13,8 @@ class @StatesBreakDown extends BreakdownChart
         text.push("#{@domain[@domain.length - 1]} or more")
         text
 
+    @tips = {}
+
   create_vis: () =>
     super()
 
@@ -55,14 +57,18 @@ class @StatesBreakDown extends BreakdownChart
         "Population: #{@fixed_formatter(data.value)}<br/>Crime: #{@fixed_formatter(d3.sum(data[crime] for crime in @crimes))}<br />"
     content += "Crime per 100,000: #{@percent_formatter(data.group)}"
 
-    @tip = new Opentip("##{data.id}", content, "",
+    if !@tips[data.id]?
+      @tips[data.id] = new Opentip("##{data.id}", content, "",
                        {style: "glass", target: true, showOn: "creation", stem: "middle", tiptJoint: "middle"})
+    else
+      @tips[data.id].setContent(content)
+    @tips[data.id].show()
 
   hide_details: (data) =>
-    @tip?.hide()
+    @tips[data.id]?.hide()
 
   trigger_show_cities: (d, i) =>
-    @tip?.hide()
+    @tips[d.id]?.hide()
 
     @data
       .forEach ((d, i) =>

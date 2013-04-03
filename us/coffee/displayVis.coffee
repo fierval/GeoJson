@@ -46,11 +46,10 @@ $ ->
 
 
   render_map = (state, crimes, update) ->
-    if !map?
-      map = new @CrimeUsMap('vis', map_data, crime_data, colorScheme, domain)
+    map = new @CrimeUsMap('vis', map_data, crime_data, colorScheme, domain)
+    map.create_vis()
 
     map.crimes = crimes
-    map.create_vis()
     map.display()
 
   render = (type, state, crimes, update) ->

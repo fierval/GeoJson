@@ -61,7 +61,7 @@ class @AllStates extends @BubbleChart
     else
       tip.setContent(content)
 
-    $("#opentip-#{tip.id}").offset({left: data.x, top: data.y})
+   # $("#opentip-#{tip.id}").offset({left: data.x, top: data.y})
     tip.show()
 
 
