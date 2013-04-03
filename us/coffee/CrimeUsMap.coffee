@@ -35,5 +35,5 @@ class @CrimeUsMap extends UsMap
   show_details: (data) =>
     @allStates.show_details(@data[data.properties.name.toUpperCase()])
 
-  hide_details: () =>
-    @allStates.hide_details()
+  hide_details: (data) =>
+    @allStates.hide_details(@data[data.properties.name.toUpperCase()])
