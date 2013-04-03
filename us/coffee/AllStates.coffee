@@ -12,7 +12,7 @@ class @AllStates extends @BubbleChart
 
     @tips = {}
     # map for sorting bubbles based on their category
-    @map_group = d3.scale.ordinal().domain(@domain).range([4..-4])
+    @map_group = d3.scale.threshold().domain(@domain).range([4..-4])
 
     @legend_text =
       () =>
@@ -23,17 +23,19 @@ class @AllStates extends @BubbleChart
     @crimes = []
     @boundingRadius = @width / 4.2
 
-  update_data: () =>
+  update_data: (set_crime_only) =>
     @data
     .forEach(
               (d) =>
-                d.radius = @radius_scale(d.value)
-                d.x = Math.random() * @width
-                d.y = Math.random() * @height
-                if @crimes.length > 0
-                  d.group = d3.sum(d[crime] for crime in @crimes) / d.value * 100000
-                delete d.px
-                delete d.py
+                  if @crimes.length > 0
+                    d.group = d3.sum(d[crime] for crime in @crimes) / d.value * 100000
+
+                  if !set_crime_only? or set_crime_only == false
+                    d.radius = @radius_scale(d.value)
+                    d.x = Math.random() * @width
+                    d.y = Math.random() * @height
+                    delete d.px
+                    delete d.py
             )
 
   create_vis: () =>
@@ -78,21 +80,16 @@ class @AllStates extends @BubbleChart
         d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
     else
       (d) =>
-        targetY = @center.y - (@map_group(d.group) / 8) * @boundingRadius
-        d.y = d.y + (targetY - d.y) * @damper * alpha * 1.2
+        targetY = @center.y - (@map_group(d.group) / 8 ) * @boundingRadius
+        d.y = d.y + (targetY - d.y + 30) * @damper * alpha * 1.8
         d.x = d.x + (@center.x - d.x) * @damper * alpha
-
-  cleanup: () =>
-    super()
-    tip?.hide() for key, tip of @tips
-    undefined
 
   display: () =>
     @update_data()
     super()
 
   update_display: (sort) =>
-    @update_data()
+    @update_data(true)
     circles = @get_bubble(@vis, @data)
 
     # chained transitions to update fill color and stroke
@@ -101,9 +98,13 @@ class @AllStates extends @BubbleChart
       .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))
 
     if sort != @arrange
-      @rearrange()
+      @arrange = sort
+    @rearrange()
 
   rearrange: () =>
+    # stop all force layouts
+    @cleanup()
+
     circles = @get_bubble(@vis, @data)
     force = @force_layout(circles, @data, [@xDelta, @yDelta], @move_towards_center)
     force.start()

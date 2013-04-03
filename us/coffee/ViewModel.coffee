@@ -6,7 +6,7 @@ class @ViewModel
       @capitalize = (text) -> text.split('_').map((t) -> t.slice(0,1).toUpperCase() + t.slice(1)).join(' ')
       @crimes = [{crime: @violent, type:"violent"}, {crime: @property, type:"property"}]
 
-      @arrange = ko.observable(false)
+      @arrange = ko.observable($.bbq.getState('sort'))
 
       @ofType = (type) =>
         res = $.grep(@crimes, (c) -> c.type == type )[0]

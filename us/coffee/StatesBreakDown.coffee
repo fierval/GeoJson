@@ -14,6 +14,7 @@ class @StatesBreakDown extends BreakdownChart
         text
 
     @tips = {}
+    @arrange = false
 
   create_vis: () =>
     super()
@@ -90,10 +91,11 @@ class @StatesBreakDown extends BreakdownChart
         1400)
 
   # this will actually show the cities
-  show_cities: (i) =>
+  show_cities: (i, sort) =>
     data = @data[i].cities
     @byCity = new AllStates(@id, data, @colorScheme, @domain)
     @byCity.crimes = @crimes
+    @byCity.arrange = sort
     if @data[i].id == "NEW_JERSEY" or @data[i].id == "CONNECTICUT"
       @byCity.height = 900
       @byCity.center = {x: @byCity.width / 2, y: @byCity.height / 2}

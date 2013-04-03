@@ -23,8 +23,8 @@ $ ->
       charts.push(allStates)
 
     allStates.crimes = crimes
-    allStates.arrange = sort
-    if !update? or !update
+    if !update? or update == false
+      allStates.arrange = sort
       allStates.create_vis()
       allStates.display()
     else
@@ -37,8 +37,8 @@ $ ->
       charts.push(byState)
 
     byState.crimes = crimes
-    byState.arrange = sort
-    if !update? or !update
+    if !update? or update == false
+      byState.arrange = sort
       byState.create_vis()
       byState.display()
       if state?
@@ -72,7 +72,7 @@ $ ->
       d3.json "crime.json",
              (data) ->
               crime_data = data
-              render(type, state, crimes, sort)
+              render(type, state, crimes, update, sort)
     else
       render(type, state, crimes, update, sort)
 
@@ -80,12 +80,15 @@ $ ->
     ret = id
     if st?
       [ret, st].join(";")
+    else
+      ret
 
   $(window).bind 'hashchange', (e) ->
     states = ({id, value} for id, value of $.bbq.getState())
     view = state for state in states when state.id? and state.id != "crimes" and state.id != "sort"
     crimes = obj.value.split(";") for obj in states when obj.id == "crimes"
-    sort = obj.value for obj in states when obj.id="sort"
+    sort = obj.value for obj in states when obj.id == "sort"
+    sort = if sort == "true" then true else false
 
     for chart in charts
       do (chart) -> chart?.cleanup()
@@ -95,16 +98,14 @@ $ ->
       crimes = viewModel.crime()
       $.bbq.pushState({crimes: crimes.join(";")})
     else
-      if viewModel.crime().length == 0
-        viewModel.crime(crimes)
+      current = set_current_state(view.id, view.value) unless !view?
+      update = current_state == current
+      current_state = current
 
       if !view?
         view = {id: 'all_states'}
 
       viewModel.crime(crimes)
-      current = set_current_state(view.id, view.value)
-      update = current_state == current
-      current_state = current
       load_visual(view.id, (if view.value == "" then undefined else view.value), crimes, update, sort)
       $('#view_selection a').removeClass('active')
       $("#view_selection a##{view.id}").addClass('active')
