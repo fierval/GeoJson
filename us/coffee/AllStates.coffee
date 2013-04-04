@@ -4,7 +4,6 @@ class @AllStates extends @BubbleChart
     @height = 900
     @max_range = 90
     @scale()
-    @arrange = false
 
     @domain = if domain? then domain else d3.range(100, 1700, 200)
     @color_class =
@@ -21,7 +20,7 @@ class @AllStates extends @BubbleChart
         text
 
     @crimes = []
-    @boundingRadius = @width / 3
+    @boundingRadius = @height / 2
 
   update_data: (set_crime_only) =>
     @data
@@ -73,22 +72,21 @@ class @AllStates extends @BubbleChart
     @tips[data.id]?.hide()
     d3.select("##{data.id}").attr("stroke", (d) -> d3.rgb($(this).css("fill")).darker()).attr("stroke-width", 2)
 
-  move_arranged: (alpha) =>
+  move_arranged: (alpha, slowdown) =>
     (d) =>
       targetY = @center.y - (@map_group(d.group) / 8 ) * @boundingRadius
-      d.y = d.y + (targetY - d.y + 30) * @damper * alpha * 1.8
-      d.x = d.x + (@center.x - d.x) * @damper * alpha
+      d.y = d.y + (targetY - d.y + 30) * alpha * alpha * alpha * alpha * 160
 
-  move_towards_center: (alpha) =>
+  move_towards_center: (alpha, slowdown) =>
     (d) =>
-      d.x = d.x + (@center.x - d.x) * @damper * alpha
-      d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
+      d.x = d.x + (@center.x - d.x) * @damper * alpha * 0.96
+      d.y = d.y + (@center.y - d.y + 50) * @damper * alpha * 0.96
 
   display: () =>
     @update_data()
     super()
 
-  update_display: (sort) =>
+  update_display: () =>
     @update_data(true)
     circles = @get_bubble(@vis, @data)
 
@@ -97,31 +95,21 @@ class @AllStates extends @BubbleChart
       .attr("class", (d) => @color_class(d.group))
       .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))
 
-    @arrange = sort
-    if @arrange
-      @rearrange(sort)
+    @rearrange()
 
-  rearrange: (sort) =>
+  rearrange: () =>
     # stop all force layouts
     @cleanup()
 
     circles = @get_bubble(@vis, @data)
-    force = @force_layout(circles, @data, [@xDelta, @yDelta], (if @arranged then @move_arranged else @move_towards_center), true, sort)
+    # this time - slowdown on both layouts
+    force = @force_layout(circles, @data, [@xDelta, @yDelta], (if @arranged then @move_arranged else @move_towards_center), true)
     force.start()
 
-  # we just need to pass an extra parameter to the parent function
-  force_layout: (circles, data, size, move, oneForce, arrange) =>
-    arrange = if arrange? then arrange else if @arrange == true then true else false
-    super(circles, data, size, move, oneForce, arrange)
-
-  # arranging means first we will "arrange"
-  # and then invoke a regular layout to create a nice spherical shape
-  on_tick: (move, e, circles, arrange) =>
-    if !arrange
-      super(move, e, circles)
-    else if arrange
-      if e.alpha > 0.055
-        super(@move_arranged, e, circles)
-      else if e.alpha < 0.055
-        @force.stop()
-        @force_layout(circles, @data, [@xDelta, @yDelta], @move_towards_center, true, !arrange).start()
+  # arrange by crime and then invoke a regular layout to create a nice spherical shape
+  on_tick: (move, e, circles) =>
+    circles
+            .each(@move_towards_center(e.alpha))
+            .each(@move_arranged(e.alpha))
+            .attr("cx", (d) -> d.x)
+            .attr("cy", (d) -> d.y)

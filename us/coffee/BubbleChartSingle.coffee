@@ -32,8 +32,8 @@ class @BubbleChart
     # moving around nodes
     @layout_gravity = -0.01
     @damper = 0.12
-    @charge = (d) -> -Math.pow(d.radius, 2) / 7.5
-    @friction = 0.92
+    @charge = (d) -> -Math.pow(d.radius, 2) / 8
+    @friction = 0.9
 
     # these will be set in create_nodes and create_vis
     @vis = null

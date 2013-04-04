@@ -14,7 +14,6 @@ class @StatesBreakDown extends BreakdownChart
         text
 
     @tips = {}
-    @arrange = false
 
   create_vis: () =>
     super()
@@ -91,11 +90,10 @@ class @StatesBreakDown extends BreakdownChart
         1400)
 
   # this will actually show the cities
-  show_cities: (i, sort) =>
+  show_cities: (i) =>
     data = @data[i].cities
     @byCity = new AllStates(@id, data, @colorScheme, @domain)
     @byCity.crimes = @crimes
-    @byCity.arrange = sort
     if @data[i].id == "NEW_JERSEY" or @data[i].id == "CONNECTICUT"
       @byCity.height = 900
       @byCity.center = {x: @byCity.width / 2, y: @byCity.height / 2}
@@ -124,17 +122,17 @@ class @StatesBreakDown extends BreakdownChart
       @data.forEach (d) =>
                     d.group = d3.sum(d[crime] for crime in @crimes) / d.value * 100000
 
-  update_display: (state, sort) =>
+  update_display: (state) =>
     @update_data()
     that = this
 
     if state?
       if !@byCity?
-        @show_cities(state, sort)
+        @show_cities(state)
       else
         @byCity.crimes = @crimes
         @byCity.cleanup()
-        @byCity.update_display(sort)
+        @byCity.update_display()
     else
       @get_groups().selectAll("circle").transition().duration(1000).attr("class", (d) -> that.color_class(d.group))
         .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))
