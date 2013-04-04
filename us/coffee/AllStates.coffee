@@ -21,7 +21,7 @@ class @AllStates extends @BubbleChart
         text
 
     @crimes = []
-    @boundingRadius = @width / 4.2
+    @boundingRadius = @width / 3
 
   update_data: (set_crime_only) =>
     @data
@@ -51,7 +51,7 @@ class @AllStates extends @BubbleChart
                          )
     @legend.show(true)
     @create_scale({x:@width, y: -@height + 30})
-    @search = new Search(@id, this, ((d) -> d.name),((data, text) -> $.grep(data, (d) -> d.name == text)[0]), {x: @width, y: -700})
+    @search = new Search(@id, this, ((d) -> d.name),((data, text) -> $.grep(data, (d) -> d.name == text)[0]), {x: @width, y: -800})
     @search.create_search_box()
 
   show_details: (data) =>
@@ -73,16 +73,16 @@ class @AllStates extends @BubbleChart
     @tips[data.id]?.hide()
     d3.select("##{data.id}").attr("stroke", (d) -> d3.rgb($(this).css("fill")).darker()).attr("stroke-width", 2)
 
+  move_arranged: (alpha) =>
+    (d) =>
+      targetY = @center.y - (@map_group(d.group) / 8 ) * @boundingRadius
+      d.y = d.y + (targetY - d.y + 30) * @damper * alpha * 1.8
+      d.x = d.x + (@center.x - d.x) * @damper * alpha
+
   move_towards_center: (alpha) =>
-    if (!@arrange)
-      (d) =>
-        d.x = d.x + (@center.x - d.x) * @damper * alpha
-        d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
-    else
-      (d) =>
-        targetY = @center.y - (@map_group(d.group) / 8 ) * @boundingRadius
-        d.y = d.y + (targetY - d.y + 30) * @damper * alpha * 1.8
-        d.x = d.x + (@center.x - d.x) * @damper * alpha
+    (d) =>
+      d.x = d.x + (@center.x - d.x) * @damper * alpha
+      d.y = d.y + (@center.y - d.y + 50) * @damper * alpha
 
   display: () =>
     @update_data()
@@ -97,14 +97,31 @@ class @AllStates extends @BubbleChart
       .attr("class", (d) => @color_class(d.group))
       .each("end", (d) -> d3.select(this).attr("stroke", d3.rgb($(this).css("fill")).darker()))
 
-    if sort != @arrange
-      @arrange = sort
-    @rearrange()
+    @arrange = sort
+    if @arrange
+      @rearrange(sort)
 
-  rearrange: () =>
+  rearrange: (sort) =>
     # stop all force layouts
     @cleanup()
 
     circles = @get_bubble(@vis, @data)
-    force = @force_layout(circles, @data, [@xDelta, @yDelta], @move_towards_center)
+    force = @force_layout(circles, @data, [@xDelta, @yDelta], (if @arranged then @move_arranged else @move_towards_center), true, sort)
     force.start()
+
+  # we just need to pass an extra parameter to the parent function
+  force_layout: (circles, data, size, move, oneForce, arrange) =>
+    arrange = if arrange? then arrange else if @arrange == true then true else false
+    super(circles, data, size, move, oneForce, arrange)
+
+  # arranging means first we will "arrange"
+  # and then invoke a regular layout to create a nice spherical shape
+  on_tick: (move, e, circles, arrange) =>
+    if !arrange
+      super(move, e, circles)
+    else if arrange
+      if e.alpha > 0.055
+        super(@move_arranged, e, circles)
+      else if e.alpha < 0.055
+        @force.stop()
+        @force_layout(circles, @data, [@xDelta, @yDelta], @move_towards_center, true, !arrange).start()

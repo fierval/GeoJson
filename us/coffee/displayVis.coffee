@@ -83,32 +83,49 @@ $ ->
     else
       ret
 
-  $(window).bind 'hashchange', (e) ->
+  get_view = () ->
     states = ({id, value} for id, value of $.bbq.getState())
     view = state for state in states when state.id? and state.id != "crimes" and state.id != "sort"
-    crimes = obj.value.split(";") for obj in states when obj.id == "crimes"
-    sort = obj.value for obj in states when obj.id == "sort"
-    sort = if sort == "true" then true else false
+    view
+
+  $(window).bind 'hashchange', (e) ->
+    hash = {}
+
+    states = ({id, value} for id, value of $.bbq.getState())
+    view = get_view()
+    crimes = $.bbq.getState("crimes")?.split(";")
+    sort = $.bbq.getState("sort")
+    sort = if sort == "true" then true else if sort == "false" then false else sort
 
     for chart in charts
       do (chart) -> chart?.cleanup()
 
-    # not the first time, we are switching tabs
-    if !crimes?
-      crimes = viewModel.crime()
-      $.bbq.pushState({crimes: crimes.join(";")})
+    # no crimes in the url:
+    # switching tabs.
+    if !crimes? or !view? or !sort?
+      if !crimes?
+        crimes = viewModel.crime()
+        hash["crimes"] = crimes.join(";")
+
+      # first time: no view yet
+      if !view?
+        hash['all_states'] = ''
+
+      if !sort?
+        hash["sort"] = viewModel.arrange()
+
+      $.bbq.pushState(hash)
+      undefined
     else
-      current = set_current_state(view.id, view.value) unless !view?
+      current = set_current_state(view.id, view.value)
       update = current_state == current
       current_state = current
 
-      if !view?
-        view = {id: 'all_states'}
-
       viewModel.crime(crimes)
-      load_visual(view.id, (if view.value == "" then undefined else view.value), crimes, update, sort)
+      viewModel.arrange(sort)
       $('#view_selection a').removeClass('active')
       $("#view_selection a##{view.id}").addClass('active')
+      load_visual(view.id, (if view.value == "" then undefined else view.value), crimes, update, sort)
 
   # action!
-  $(window).trigger('hashchange')
+  $(window).trigger 'hashchange'

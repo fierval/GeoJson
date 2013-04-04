@@ -117,7 +117,7 @@ class @BubbleChart
 
   # oneForce set to true means we are re-using the same layout
   # otherwise set to false
-  force_layout: (circles, data, size, move, oneForce) =>
+  force_layout: (circles, data, size, move, oneForce, param) =>
     force = d3.layout.force()
       .nodes(data)
       .size(size)
@@ -131,7 +131,7 @@ class @BubbleChart
     force.gravity(@layout_gravity)
       .charge(@charge)
       .friction(@friction)
-      .on "tick", (e) => @on_tick(move, e, circles)
+      .on "tick", (e) => @on_tick(move, e, circles, param)
 
   plot: (cell, data, oneForce) =>
     circles = @create_circles(cell, data)
@@ -144,7 +144,7 @@ class @BubbleChart
   # Sets up force layout to display
   # all nodes in one circle.
   display: () =>
-    @plot(@vis, @data)
+    @plot(@vis, @data, true)
 
   # Moves all circles towards the @center
   # of the visualization
@@ -153,7 +153,7 @@ class @BubbleChart
       d.x = d.x + (@center.x - d.x) * @damper * alpha
       d.y = d.y + (@center.y - d.y) * @damper * alpha
 
-  on_tick: (move, e, circles) =>
+  on_tick: (move, e, circles, param) =>
     circles.each(move(e.alpha))
     .attr("cx", (d) -> d.x)
     .attr("cy", (d) -> d.y)

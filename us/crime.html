@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Crime 2008</title>
+    <title>Crime Explorer</title>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -21,7 +21,7 @@
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span1"><h5>US Crime 2008</h5>
+        <div class="span1"><h5>US Crime</h5>
             <fieldset>
                 <div data-bind="foreach: crimes">
                     <span data-bind="text: $parent.capitalize(type)"></span>
@@ -38,11 +38,25 @@
                     </div>
                     <br/>
                 </div>
-                <label class="checkbox">
-                    <input type="checkbox" data-bind="checked: arrange, click: sort_crime()" >
-                    <span>Arrange</span>
-                </label>
+                <div class="row-fluid">
+                    <div class="span10">
+                        <label class="checkbox">
+                            <input type="checkbox" data-bind="checked: arrange, click: sort_crime">
+                            <span>Arrange</span>
+                        </label>
+                    </div>
+                    <div class="span2">
+                        <a href="#" data-ot="Arranges circles by crime on combined visuals (all states, cities) when checked" data-ot-style="glass" >
+                            <i class="icon-comment"></i>
+                        </a>
+                    </div>
+                </div>
             </fieldset>
+            <div id="aux">
+                <a href="https://github.com/fierval/GeoJson/tree/master/us">Sources on GitHub</a>
+                <a href="https://explore.data.gov/Law-Enforcement-Courts-and-Prisons/2008-Crime-in-the-United-States/bds9-jrca">Data
+                    Source</a>
+            </div>
         </div>
         <div class="span11">
             <div id="view_selection" class="btn-group">
