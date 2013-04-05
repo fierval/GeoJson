@@ -40,6 +40,8 @@ class @AllStates extends @BubbleChart
   create_vis: () =>
     super()
 
+    @tips = {}
+
     # since we are using a threshold scale, we need to make sure we fall into the bucket
     # we promise to fall into in the legend text
     @legend = new Legend(@vis,

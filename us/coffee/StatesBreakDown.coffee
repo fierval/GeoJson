@@ -16,6 +16,7 @@ class @StatesBreakDown extends BreakdownChart
     @tips = {}
 
   create_vis: () =>
+    @tips = {}
     super()
 
     # since we are using a threshold scale, we need to make sure we fall into the bucket
