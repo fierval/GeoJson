@@ -1,164 +1,85 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Crime Explorer</title>
 
-    .state.Hawaii {
-        fill: #ddc;
-    }
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
-    .state.Alaska {
-        fill: #cdd;
-    }
+    <link rel="stylesheet" href="../trails/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="../trails/css/bootstrap.css">
+    <link rel="stylesheet" href="../trails/css/colorbrewer.css">
+    <link rel="stylesheet" href="../trails/css/opentip.css">
+    <link rel="stylesheet" href="../trails/css/visuals.css">
+    <link rel="stylesheet" href="../trails/css/map.css">
 
-    .country {
-        fill: #cdc;
-    }
+    <script src="../trails/js/modernizr-2.6.2.min.js"></script>
 
-    .state {
-        fill: #fee3a6
-    }
-
-    .country-boundary {
-        fill: none;
-        stroke: #777;
-        stroke-dasharray: 3, 1;
-        stroke-linejoin: round;
-    }
-
-    .state-boundary {
-        fill: none;
-        stroke: #aacfff;
-        stroke-dasharray: 2, 2;
-        stroke-linejoin: round;
-    }
-
-    .country-boundary.USA {
-        stroke: #aaa;
-    }
-
-    .place,
-    .place-label {
-        fill: #444;
-    }
-
-    text {
-        font-size: 10px;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        pointer-events: none;
-    }
-
-    .country-label {
-        fill: #777;
-        fill-opacity: .5;
-        font-size: 20px;
-        font-weight: 300;
-        text-anchor: middle;
-    }
-
-    .link {
-        display: block;
-        border-left: dashed 2px #ccc;
-        padding-left: 18px;
-        margin-left: -20px;
-        width: 720px;
-    }
-
-    .link:hover {
-        background: #fff;
-        text-decoration: none;
-    }
-</style>
+</head>
 <body>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span1"><h5>US Crime</h5>
+            <fieldset>
+                <div data-bind="foreach: crimes">
+                    <span data-bind="text: $parent.capitalize(type)"></span>
+
+                    <div class=row-fluid>
+                        <div class="span1"></div>
+                        <div class="span11" data-bind="foreach: crime">
+                            <label class="checkbox">
+                                <input type="checkbox"
+                                       data-bind="value: $data, checked: $root.crime, click: $root.get_crimes">
+                                <span data-bind="text: $root.capitalize($data)"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            </fieldset>
+            <div id="aux">
+                <a href="https://github.com/fierval/GeoJson/tree/master/us">GitHub</a><br/>
+                <a href="https://explore.data.gov/Law-Enforcement-Courts-and-Prisons/2008-Crime-in-the-United-States/bds9-jrca">Data
+                    Source</a>
+            </div>
+        </div>
+        <div class="span11">
+            <div id="view_selection" class="btn-group">
+                <a href="#all_states" id="all_states" class="btn active">All States</a>
+                <a href="#by_state" id="by_state" class="btn">By State</a>
+                <a href="#map" id="map" class="btn">Map</a>
+            </div>
+            <!-- Visualization goes here -->
+            <div id="vis" style="position: relative;"></div>
+        </div>
+
+    </div>
+</div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/topojson.v0.js"></script>
-<script>
-
-    var width = 960, height = 1160;
-    var color = d3.scale.linear().domain(['A'.charCodeAt(0),'Z'.charCodeAt(0)]).range(['#ddc', '#fee3a6']);
-
-    var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height);
-
-    d3.json("us.json", function (error, us) {
-
-        var country = topojson.object(us, us.objects.country);
-
-        var projection = d3.geo.albersUsa()
-
-        var path = d3.geo.path()
-                .projection(projection)
-                .pointRadius(1);
-
-        svg.selectAll(".country")
-                .data(country.geometries)
-                .enter().append("path")
-                .attr("class", "country")
-                .attr("d", path);
-
-        var states = svg.selectAll(".state")
-                .data(topojson.object(us, us.objects.states).geometries)
-                .enter()
-                .append("path")
-                .attr("d", path)
-                .style("fill", function (d) {
-                    return color(d.properties.name.charCodeAt(0));
-                    });
-
-        states.append("title").text(function(d) {return d.properties.name;});
-
-        svg.append("path")
-                .datum(topojson.mesh(us, us.objects.states))
-                .attr("d", path)
-                .attr("class", "state-boundary")
-
-        var cities = [];
-        us.objects.cities.geometries.forEach(function (d, i) {
-            if (d.properties.scalerank < 4) {
-                cities.push(d);
-            }
-        });
-        us.objects.cities.geometries = cities;
-
-        svg.append("path")
-                .datum(topojson.object(us, us.objects.cities))
-                .attr("d", path)
-                .attr("class", "place");
-
-        svg.selectAll(".place-label")
-                .data(topojson.object(us, us.objects.cities).geometries)
-                .enter().append("text")
-                .attr("class", "place-label")
-                .attr("transform", function (d) {
-                    return "translate(" + projection(d.coordinates) + ")";
-                })
-                .attr("dy", ".35em")
-                .text(function (d) {
-                    return d.properties.name;
-                });
-
-        svg.selectAll(".place-label")
-                .attr("x", function (d) {
-                    return d.coordinates[0] > -1 ? 6 : -6;
-                })
-                .style("text-anchor", function (d) {
-                    return d.coordinates[0] > -1 ? "start" : "end";
-                });
-
-        svg.selectAll(".country-label")
-                .data(country.geometries)
-                .enter().append("text")
-                .attr("class", function (d) {
-                    return "country-label " + d.id;
-                })
-                .attr("transform", function (d) {
-                    return "translate(" + path.centroid(d) + ")";
-                })
-                .attr("dy", ".35em")
-                .text(function (d) {
-                    return d.properties.name;
-                });
-    });
+<script src="http://d3js.org/topojson.v0.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="../trails/js/opentip-jquery.js"></script>
+<script src="../trails/js/jquery.ba-bbq.js"></script>
+<script src="../trails/js/knockout-2.2.1.debug.js"></script>
+<script src="../trails/js/bootstrap.js"></script>
 
 
-</script>
+<!-- Visualization Scripts -->
+
+<script src="coffee/CircularScale.js"></script>
+<script src="coffee/Search.js"></script>
+<script src="coffee/legend.js"></script>
+<script src="coffee/BubbleChartSingle.js"></script>
+<script src="coffee/AllStates.js"></script>
+<script src="coffee/BreakdownChart.js"></script>
+<script src="coffee/UsMap.js"></script>
+<script src="coffee/CrimeUsMap.js"></script>
+<script src="coffee/StatesBreakDown.js"></script>
+<script src="coffee/ViewModel.js"></script>
+<script src="coffee/displayVis.js"></script>
+
+
+</body>
+</html>

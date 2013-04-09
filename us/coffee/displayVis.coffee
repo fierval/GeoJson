@@ -13,7 +13,7 @@ $ ->
   viewModel = new window.ViewModel()
   ko.applyBindings(viewModel)
 
-  toArray = (data) -> d3.map(data).values()
+  toArray = (data) -> d3.values(data)
   String::startsWith = (str) -> this.slice(0, str.length) == str
   String::removeLeadHash = () -> if this.startsWith("#") then this.slice(1) else this
 
@@ -89,7 +89,6 @@ $ ->
   $(window).bind 'hashchange', (e) ->
     hash = {}
 
-    states = ({id, value} for id, value of $.bbq.getState())
     view = get_view()
     crimes = $.bbq.getState("crimes")?.split(";")
 
