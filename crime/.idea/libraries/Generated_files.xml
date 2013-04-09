@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/coffee/AllStates.js" />
+        <item url="file://$PROJECT_DIR$/coffee/displayVis.js" />
+        <item url="file://$PROJECT_DIR$/coffee/StatesBreakDown.js" />
+        <item url="file://$PROJECT_DIR$/coffee/BubbleChartSingle.js" />
+        <item url="file://$PROJECT_DIR$/coffee/ViewModel.js" />
+        <item url="file://$PROJECT_DIR$/coffee/Search.js" />
+        <item url="file://$PROJECT_DIR$/coffee/CrimeUsMap.js" />
+        <item url="file://$PROJECT_DIR$/coffee/UsMap.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/coffee/displayVis.js" />
+      <root url="file://$PROJECT_DIR$/coffee/AllStates.js" />
+      <root url="file://$PROJECT_DIR$/coffee/StatesBreakDown.js" />
+      <root url="file://$PROJECT_DIR$/coffee/ViewModel.js" />
+      <root url="file://$PROJECT_DIR$/coffee/BubbleChartSingle.js" />
+      <root url="file://$PROJECT_DIR$/coffee/UsMap.js" />
+      <root url="file://$PROJECT_DIR$/coffee/CrimeUsMap.js" />
+      <root url="file://$PROJECT_DIR$/coffee/Search.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>
