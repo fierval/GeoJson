@@ -1,0 +1,46 @@
+.state.Hawaii {
+    fill: #ddc;
+}
+
+.state.Alaska {
+    fill: #cdd;
+}
+
+.country {
+    fill: #cdc;
+}
+
+.state {
+    fill: #fee3a6
+}
+
+.country-boundary {
+    fill: none;
+    stroke: #777;
+    stroke-dasharray: 3, 1;
+    stroke-linejoin: round;
+}
+
+.state-boundary {
+    fill: none;
+    stroke: #aacfff;
+    stroke-dasharray: 2, 2;
+    stroke-linejoin: round;
+}
+
+.country-boundary.USA {
+    stroke: #aaa;
+}
+
+.place,
+.place-label {
+    fill: #444;
+}
+
+.country-label {
+    fill: #777;
+    fill-opacity: .5;
+    font-size: 20px;
+    font-weight: 300;
+    text-anchor: middle;
+}
