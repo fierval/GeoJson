@@ -44,13 +44,16 @@
       }).enter().append("g").attr("id", function(d) {
         return d.id;
       }).attr("class", "cell").attr("transform", function(d, i) {
-        return "translate(" + (_this.getX(i)) + ", " + (_this.getY(i)) + ")";
+        return "translate(" + (_this.width + _this.getX(i)) + ", " + (_this.getY(i)) + ")";
       });
       this.groups.each(function(d) {
         return that.plot(d3.select(this), that.get_group_data(d), false);
       });
-      return this.groups.append("text").attr("x", this.center.x).attr("y", this.yDelta).attr("text-anchor", "middle").text(function(d) {
+      this.groups.append("text").attr("x", this.center.x).attr("y", this.yDelta).attr("text-anchor", "middle").text(function(d) {
         return that.get_group_title(d);
+      });
+      return this.groups.transition().duration(1200).attr("transform", function(d, i) {
+        return "translate(" + (_this.getX(i)) + ", " + (_this.getY(i)) + ")";
       });
     };
 
