@@ -41,7 +41,7 @@ class @BreakdownChart extends BubbleChart
         .append("g")
         .attr("id", (d) -> d.id)
         .attr("class", "cell")
-        .attr("transform", (d, i) => "translate(#{@getX(i)}, #{@getY(i)})")
+        .attr("transform", (d, i) => "translate(#{@width + @getX(i)}, #{@getY(i)})")
 
     @groups
         .each((d) -> that.plot(d3.select(this), that.get_group_data(d), false)) # false means we are using different force layout for each plot
@@ -51,6 +51,8 @@ class @BreakdownChart extends BubbleChart
       .attr("y", @yDelta)
       .attr("text-anchor", "middle")
       .text((d) -> that.get_group_title(d))
+
+    @groups.transition().duration(1200).attr("transform", (d, i) => "translate(#{@getX(i)}, #{@getY(i)})")
 
   get_groups: () =>
     @vis.selectAll("g.cell")
