@@ -74,29 +74,12 @@
     };
 
     StatesBreakDown.prototype.display = function() {
-      var circle,
-        _this = this;
+      var _this = this;
 
       StatesBreakDown.__super__.display.call(this);
-      this.groups.on("click", function(d, i) {
+      return this.groups.on("click", function(d, i) {
         return _this.trigger_show_cities(d, i, _this);
       });
-      if ((this.help_tip == null) && $.bbq.getState('by_state') === '') {
-        circle = $(".cell#" + this.data[Math.ceil(Math.random() * 11 + 11)].id);
-        this.help_tip = new Opentip(circle, "<p style='font-size:17px'>Click me!</p>", {
-          borderWidth: 3,
-          stemLength: 18,
-          stemBase: 20,
-          style: "glass",
-          target: true,
-          borderColor: "#317CC5"
-        });
-        this.help_tip.show();
-        return d3.timer(function() {
-          _this.help_tip.hide();
-          return true;
-        }, 3000);
-      }
     };
 
     StatesBreakDown.prototype.show_details = function(data) {

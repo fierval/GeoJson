@@ -42,17 +42,6 @@ class @StatesBreakDown extends BreakdownChart
     @groups.on "click", (d, i) =>
       @trigger_show_cities(d, i, this)
 
-    if !@help_tip? and $.bbq.getState('by_state') == ''
-      circle = $(".cell##{@data[Math.ceil(Math.random() * 11 + 11)].id}")
-      @help_tip = new Opentip(circle,
-                    "<p style='font-size:17px'>Click me!</p>",
-                    { borderWidth: 3, stemLength: 18, stemBase: 20, style: "glass", target: true, borderColor: "#317CC5" })
-      @help_tip.show()
-      d3.timer () =>
-                @help_tip.hide()
-                true
-               ,3000
-
   show_details: (data) =>
     content =
         "Population: #{@fixed_formatter(data.value)}<br/>Crime: #{@fixed_formatter(d3.sum(data[crime] for crime in @crimes))}<br />"
