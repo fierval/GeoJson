@@ -30,6 +30,8 @@ class @StatesBreakDown extends BreakdownChart
     @legend.show(true)
     @create_scale()
 
+    $(@id).append("<div style='position: relative; left: #{@width}px; top: -600px'><span>Click a bubble for details</span></div>")
+
   get_group_data: (d) ->
     [d]
 

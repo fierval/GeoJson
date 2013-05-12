@@ -62,7 +62,8 @@
         y: 40
       });
       this.legend.show(true);
-      return this.create_scale();
+      this.create_scale();
+      return $(this.id).append("<div style='position: relative; left: " + this.width + "px; top: -600px'><span>Click a bubble for details</span></div>");
     };
 
     StatesBreakDown.prototype.get_group_data = function(d) {
