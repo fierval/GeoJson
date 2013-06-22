@@ -93,7 +93,11 @@
       AllStates.__super__.create_vis.call(this);
       this.tips = {};
       this.legend = new Legend(this.vis, (function(i) {
-        return _this.color_class(_this.domain[i] - 1);
+        if (i < _this.domain.length) {
+          return _this.color_class(_this.domain[i] - 1);
+        } else {
+          return _this.color_class(_this.domain[_this.domain.length - 1] + 1);
+        }
       }), this.legend_text(), 'Crime per 100,000 population', {
         x: 75,
         y: 40

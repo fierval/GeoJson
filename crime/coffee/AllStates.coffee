@@ -45,7 +45,7 @@ class @AllStates extends @BubbleChart
     # since we are using a threshold scale, we need to make sure we fall into the bucket
     # we promise to fall into in the legend text
     @legend = new Legend(@vis,
-                         ((i) => @color_class(@domain[i] - 1)),
+                         ((i) => if i < @domain.length then @color_class(@domain[i] - 1) else @color_class(@domain[@domain.length - 1] + 1)),
                          @legend_text(),
                          'Crime per 100,000 population',
                          {x: 75, y: 40}
